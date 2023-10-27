@@ -9,3 +9,45 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+enum Role {
+  USER
+  ADMIN
+}
+
+model Pet {
+  id                 String   @id @default(uuid())
+  name               String
+  description        String
+  age                Int
+  size               String
+  energy_level       String
+  independence_level String
+  environment        String
+  images             String[]
+  requirement        String
+  created_at         DateTime
+  updated_at         DateTime
+
+  org    Org    @relation(fields: [org_id], references: [id])
+  org_id String
+
+  @@map("pets")
+}
+
+model Org {
+  id            String   @id @default(uuid())
+  name          String
+  admin_name    String
+  email         String
+  password_hash String
+  role          Role     @default(ADMIN)
+  cep           String
+  address       String
+  whatsapp      Int
+  created_at    DateTime
+
+  Pet Pet[]
+
+  @@map("orgs")
+}
