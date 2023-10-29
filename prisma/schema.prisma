@@ -26,7 +26,7 @@ model Pet {
   environment        String
   images             String[]
   requirement        String
-  created_at         DateTime
+  created_at         DateTime @default(now())
   updated_at         DateTime
 
   org    Org    @relation(fields: [org_id], references: [id])
@@ -45,7 +45,7 @@ model Org {
   cep           String
   address       String
   whatsapp      Int
-  created_at    DateTime
+  created_at    DateTime @default(now())
 
   Pet Pet[]
 
