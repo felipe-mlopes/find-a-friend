@@ -28,9 +28,10 @@ model Pet {
   requirement        String
   created_at         DateTime @default(now())
   updated_at         DateTime
+  org_id             String
 
-  org    Org    @relation(fields: [org_id], references: [id])
-  org_id String
+  AdoptionRequirements AdoptionRequirements[]
+  org                  Org                    @relation(fields: [org_id], references: [id])
 
   @@map("pets")
 }
@@ -39,7 +40,7 @@ model Org {
   id            String   @id @default(uuid())
   name          String
   admin_name    String
-  email         String
+  email         String   @unique
   password_hash String
   role          Role     @default(ADMIN)
   cep           String
@@ -50,4 +51,15 @@ model Org {
   Pet Pet[]
 
   @@map("orgs")
+}
+
+model AdoptionRequirements {
+  id          String   @id @default(uuid())
+  description String
+  created_at  DateTime @default(now())
+  pet_id      String
+
+  pet Pet @relation(fields: [pet_id], references: [id])
+
+  @@map("adoptions")
 }
