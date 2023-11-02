@@ -1,11 +1,11 @@
-export async function searchCityToCep(cep: string) {
-  const data = await fetch(`https://viacep.com.br/ws/${cep}/json/`)
+interface CepResponse {
+  localidade: string
+}
+
+export async function searchCityToCep(cep: string): Promise<string> {
+  const data: CepResponse = await fetch(`https://viacep.com.br/ws/${cep}/json/`)
     .then((res) => res.json())
-    .catch((err) => {
-      console.error(err)
-    })
+    .catch((err) => console.error(err.message))
 
-  const city = data.localidade
-
-  return city
+  return data.localidade
 }
