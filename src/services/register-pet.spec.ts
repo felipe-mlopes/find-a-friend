@@ -25,6 +25,7 @@ describe('Pet Register Service', () => {
       email: 'org@example.com',
       password_hash: '123456',
       cep: '21220000',
+      city: 'Rio de Janeiro',
       address: 'Example St',
       whatsapp: 21999999,
     })
