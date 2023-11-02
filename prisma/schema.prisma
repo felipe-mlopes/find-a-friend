@@ -45,6 +45,7 @@ model Org {
   role          Role     @default(ADMIN)
   cep           String
   address       String
+  city          String
   whatsapp      Int
   created_at    DateTime @default(now())
 
