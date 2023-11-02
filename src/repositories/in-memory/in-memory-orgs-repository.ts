@@ -2,6 +2,7 @@ import { randomUUID } from 'node:crypto'
 import { Org, Prisma } from '@prisma/client'
 
 import { OrgsRepository } from '../orgs-repositories'
+// import { searchCityToCep } from '../../utils/search-city-to-cep'
 
 export class InMemoryOrgsRepository implements OrgsRepository {
   public items: Org[] = []
@@ -15,6 +16,7 @@ export class InMemoryOrgsRepository implements OrgsRepository {
       password_hash: data.password_hash,
       role: data.role ?? 'ADMIN',
       cep: data.cep,
+      city: data.city,
       address: data.address,
       whatsapp: data.whatsapp,
       created_at: new Date(),
@@ -43,5 +45,15 @@ export class InMemoryOrgsRepository implements OrgsRepository {
     }
 
     return org
+  }
+
+  async findByCity(city: string) {
+    const orgs = this.items.filter((item) => item.city === city)
+
+    if (!orgs) {
+      return null
+    }
+
+    return orgs
   }
 }
