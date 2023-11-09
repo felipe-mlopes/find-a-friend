@@ -15,18 +15,48 @@ enum Role {
   ADMIN
 }
 
+enum Age {
+  PUPPY
+  ADULT
+  SENIOR
+}
+
+enum EnergyLevel {
+  CALM
+  PEACEFUL
+  FUSSY
+}
+
+enum Size {
+  SMALL
+  MEDIUM
+  BIG
+}
+
+enum IndependenceLevel {
+  LOW
+  MEDIUM
+  HIGH
+}
+
+enum Environment {
+  TIGHT
+  NORMAL
+  WIDE
+}
+
 model Pet {
-  id                 String   @id @default(uuid())
+  id                 String            @id @default(uuid())
   name               String
   description        String
-  age                Int
-  size               String
-  energy_level       String
-  independence_level String
-  environment        String
+  age                Age
+  size               Size
+  energy_level       EnergyLevel
+  independence_level IndependenceLevel
+  environment        Environment
   images             String[]
   requirement        String
-  created_at         DateTime @default(now())
+  created_at         DateTime          @default(now())
   updated_at         DateTime
   org_id             String
 
@@ -46,10 +76,10 @@ model Org {
   cep           String
   address       String
   city          String
-  whatsapp      Int
+  whatsapp      String
   created_at    DateTime @default(now())
 
-  Pet Pet[]
+  pet Pet[]
 
   @@map("orgs")
 }
