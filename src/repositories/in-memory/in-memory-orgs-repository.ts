@@ -2,7 +2,6 @@ import { randomUUID } from 'node:crypto'
 import { Org, Prisma } from '@prisma/client'
 
 import { OrgsRepository } from '../orgs-repositories'
-// import { searchCityToCep } from '../../utils/search-city-to-cep'
 
 export class InMemoryOrgsRepository implements OrgsRepository {
   public items: Org[] = []
@@ -30,9 +29,7 @@ export class InMemoryOrgsRepository implements OrgsRepository {
   async findById(id: string) {
     const org = this.items.find((item) => item.id === id)
 
-    if (!org) {
-      return null
-    }
+    if (!org) return null
 
     return org
   }
@@ -40,20 +37,24 @@ export class InMemoryOrgsRepository implements OrgsRepository {
   async findByEmail(email: string) {
     const org = this.items.find((item) => item.email === email)
 
-    if (!org) {
-      return null
-    }
+    if (!org) return null
+
+    return org
+  }
+
+  async findByEmailOrName(email: string, name: string) {
+    const org = this.items.find(
+      (item) => item.email === email || item.name === name,
+    )
+
+    if (!org) return null
 
     return org
   }
 
   async findByCity(city: string) {
-    const orgs = this.items.filter((item) => item.city === city)
-
-    if (!orgs) {
-      return null
-    }
-
-    return orgs
+    return this.items.filter(
+      (item) => item.city.toLocaleLowerCase() === city.toLocaleLowerCase(),
+    )
   }
 }
