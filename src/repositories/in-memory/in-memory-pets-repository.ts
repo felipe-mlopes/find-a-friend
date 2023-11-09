@@ -1,5 +1,5 @@
+import { Org, Pet, Prisma } from '@prisma/client'
 import { randomUUID } from 'node:crypto'
-import { Pet, Prisma } from '@prisma/client'
 
 import { PetsRepository } from '../pets-repositories'
 
@@ -28,17 +28,55 @@ export class InMemoryPetsRepository implements PetsRepository {
     return pet
   }
 
-  async findByCity(cep: string) {
-    return null
+  async findById(id: string) {
+    const pet = this.items.find((item) => item.id === id)
+
+    if (!pet) return null
+
+    return pet
   }
 
-  async findByCharacteristics(
-    age?: number | undefined,
-    size?: string | undefined,
-    energyLevel?: string | undefined,
-    independenceLevel?: string | undefined,
-    environment?: string | undefined,
+  async findManyOrgs(orgs: Org[]) {
+    const orgsIdArray = orgs.map((org) => org.id)
+
+    return this.items.filter((item) => orgsIdArray.includes(item.org_id))
+  }
+
+  async findManyByQuery(
+    age: string | null,
+    size: string | null,
+    energyLevel: string | null,
+    independenceLevel: string | null,
+    environment: string | null,
   ) {
-    return null
+    let petsFiltered = this.items
+
+    if (age) {
+      petsFiltered = this.items.filter((item) => item.age === age)
+    }
+
+    if (size) {
+      petsFiltered = this.items.filter((item) => item.size === size)
+    }
+
+    if (energyLevel) {
+      petsFiltered = this.items.filter(
+        (item) => item.energy_level === energyLevel,
+      )
+    }
+
+    if (independenceLevel) {
+      petsFiltered = this.items.filter(
+        (item) => item.independence_level === independenceLevel,
+      )
+    }
+
+    if (environment) {
+      petsFiltered = this.items.filter(
+        (item) => item.environment === environment,
+      )
+    }
+
+    return petsFiltered
   }
 }
