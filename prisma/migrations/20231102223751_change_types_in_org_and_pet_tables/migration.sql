@@ -1,0 +1,5 @@
+-- AlterTable
+ALTER TABLE "orgs" ALTER COLUMN "whatsapp" SET DATA TYPE TEXT;
+
+-- AlterTable
+ALTER TABLE "pets" ALTER COLUMN "age" SET DATA TYPE TEXT;
