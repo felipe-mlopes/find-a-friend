@@ -13,7 +13,7 @@ interface CreateOrgServiceRequest {
   password: string
   cep: string
   address: string
-  whatsapp: number
+  whatsapp: string
 }
 
 interface CreateOrgServiceResponse {
