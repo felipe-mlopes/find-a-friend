@@ -1,7 +1,7 @@
 import { Org, Pet, Prisma } from '@prisma/client'
 import { randomUUID } from 'node:crypto'
 
-import { PetsRepository } from '../pets-repositories'
+import { PetQuery, PetsRepository } from '../pets-repositories'
 
 export class InMemoryPetsRepository implements PetsRepository {
   public items: Pet[] = []
@@ -42,13 +42,13 @@ export class InMemoryPetsRepository implements PetsRepository {
     return this.items.filter((item) => orgsIdArray.includes(item.org_id))
   }
 
-  async findManyByQuery(
-    age: string | null,
-    size: string | null,
-    energyLevel: string | null,
-    independenceLevel: string | null,
-    environment: string | null,
-  ) {
+  async findManyByQuery({
+    age,
+    size,
+    energyLevel,
+    independenceLevel,
+    environment,
+  }: PetQuery) {
     let petsFiltered = this.items
 
     if (age) {
