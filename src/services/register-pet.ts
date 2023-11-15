@@ -1,4 +1,11 @@
-import { Pet } from '@prisma/client'
+import {
+  Age,
+  EnergyLevel,
+  Environment,
+  IndependenceLevel,
+  Pet,
+  Size,
+} from '@prisma/client'
 import { PetsRepository } from '../repositories/pets-repositories'
 import { OrgsRepository } from '../repositories/orgs-repositories'
 import { ResourceNotFoundError } from './errors/resource-not-found-error'
@@ -6,11 +13,11 @@ import { ResourceNotFoundError } from './errors/resource-not-found-error'
 interface ResgisterPetServiceRequest {
   name: string
   description: string
-  age: number
-  size: string
-  energyLevel: string
-  independenceLevel: string
-  environment: string
+  age: Age
+  size: Size
+  energyLevel: EnergyLevel
+  independenceLevel: IndependenceLevel
+  environment: Environment
   images: string[]
   requirement: string
   orgId: string
