@@ -27,19 +27,19 @@ describe('Pet Register Service', () => {
       cep: '21220000',
       city: 'Rio de Janeiro',
       address: 'Example St',
-      whatsapp: 21999999,
+      whatsapp: '21912345678',
     })
 
     const { pet } = await sut.execute({
       name: 'Paçoca',
       description: 'bla bla',
-      age: 3,
-      energyLevel: '',
-      environment: '',
+      age: 'PUPPY',
+      energyLevel: 'FUSSY',
+      environment: 'NORMAL',
       images: [''],
-      independenceLevel: '',
+      independenceLevel: 'MEDIUM',
       requirement: '',
-      size: '',
+      size: 'MEDIUM',
       orgId: id,
     })
 
