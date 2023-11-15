@@ -4,8 +4,8 @@ import { compare } from 'bcrypt'
 import { OrgsRepository } from '../repositories/orgs-repositories'
 import { CreateOrgService } from './create-org'
 import { InMemoryOrgsRepository } from '../repositories/in-memory/in-memory-orgs-repository'
-import { InvalidCredentialsError } from './errors/invalid-credentials-error'
 import { InvalidCEPError } from './errors/invalid-cep-error'
+import { OrgAlreadyExistsError } from './errors/org-already-exists-error'
 
 let orgsRepository: OrgsRepository
 let sut: CreateOrgService
@@ -24,7 +24,7 @@ describe('Org Register Service', () => {
       password: '123456',
       cep: '21220000',
       address: 'Example St',
-      whatsapp: 21999999,
+      whatsapp: '21912345678',
     })
 
     expect(org.id).toEqual(expect.any(String))
@@ -38,7 +38,7 @@ describe('Org Register Service', () => {
       password: '123456',
       cep: '21220000',
       address: 'Example St',
-      whatsapp: 21999999,
+      whatsapp: '21912345678',
     })
 
     const isPasswordCorrectlyHashed = await compare('123456', org.password_hash)
@@ -56,7 +56,7 @@ describe('Org Register Service', () => {
       password: '123456',
       cep: '21220000',
       address: 'Example St',
-      whatsapp: 21999999,
+      whatsapp: '21912345678',
     })
 
     await expect(() =>
@@ -67,9 +67,9 @@ describe('Org Register Service', () => {
         password: '123456',
         cep: '221234',
         address: 'Example St',
-        whatsapp: 21999999,
+        whatsapp: '21912345678',
       }),
-    ).rejects.toBeInstanceOf(InvalidCredentialsError)
+    ).rejects.toBeInstanceOf(OrgAlreadyExistsError)
   })
 
   it('should not be able to register with invalid CEP', async () => {
@@ -81,7 +81,7 @@ describe('Org Register Service', () => {
         password: '123456',
         cep: '21220123',
         address: 'Example St',
-        whatsapp: 21999999,
+        whatsapp: '21912345678',
       }),
     ).rejects.toBeInstanceOf(InvalidCEPError)
   })
