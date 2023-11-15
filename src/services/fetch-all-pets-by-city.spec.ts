@@ -1,13 +1,11 @@
 import { describe, beforeEach, it, expect } from 'vitest'
 
-import { PetsRepository } from '../repositories/pets-repositories'
 import { InMemoryPetsRepository } from '../repositories/in-memory/in-memory-pets-repository'
-import { OrgsRepository } from '../repositories/orgs-repositories'
 import { InMemoryOrgsRepository } from '../repositories/in-memory/in-memory-orgs-repository'
 import { FetchAllPetsByCityService } from './fetch-all-pets-by-city'
 
-let petsRepository: PetsRepository
-let orgsRepository: OrgsRepository
+let petsRepository: InMemoryPetsRepository
+let orgsRepository: InMemoryOrgsRepository
 let sut: FetchAllPetsByCityService
 
 describe('Fetch Pet By City Service', () => {

@@ -1,13 +1,12 @@
 import { beforeEach, describe, expect, it } from 'vitest'
 import { compare } from 'bcrypt'
 
-import { OrgsRepository } from '../repositories/orgs-repositories'
-import { CreateOrgService } from './create-org'
 import { InMemoryOrgsRepository } from '../repositories/in-memory/in-memory-orgs-repository'
+import { CreateOrgService } from './create-org'
 import { InvalidCEPError } from './errors/invalid-cep-error'
 import { OrgAlreadyExistsError } from './errors/org-already-exists-error'
 
-let orgsRepository: OrgsRepository
+let orgsRepository: InMemoryOrgsRepository
 let sut: CreateOrgService
 
 describe('Org Register Service', () => {
