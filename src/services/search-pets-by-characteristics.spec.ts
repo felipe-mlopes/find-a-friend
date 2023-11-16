@@ -3,6 +3,7 @@ import { describe, beforeEach, it, expect } from 'vitest'
 import { InMemoryPetsRepository } from '../repositories/in-memory/in-memory-pets-repository'
 import { InMemoryOrgsRepository } from '../repositories/in-memory/in-memory-orgs-repository'
 import { SearchPetsByCharacteristicsService } from './search-pets-by-characteristics'
+import { ResourceNotFoundError } from './errors/resource-not-found-error'
 
 let petsRepository: InMemoryPetsRepository
 let orgsRepository: InMemoryOrgsRepository
@@ -15,7 +16,7 @@ describe('Seach Pets By Characteristics Service', () => {
     sut = new SearchPetsByCharacteristicsService(petsRepository, orgsRepository)
   })
 
-  it('should be to able search pets by one characteristic', async () => {
+  it('should be able to search pets by one characteristic', async () => {
     const city = 'Rio de Janeiro'
 
     const org = await orgsRepository.create({
@@ -74,7 +75,7 @@ describe('Seach Pets By Characteristics Service', () => {
     ])
   })
 
-  it('should be to able search pets by all characteristics', async () => {
+  it('should be able to search pets by all characteristics', async () => {
     const city = 'Rio de Janeiro'
 
     const org = await orgsRepository.create({
@@ -128,5 +129,44 @@ describe('Seach Pets By Characteristics Service', () => {
 
     expect(pets).toHaveLength(1)
     expect(pets).toEqual([expect.objectContaining({ energy_level: 'FUSSY' })])
+  })
+
+  it('should not be able to search for pets in the non-existent city', async () => {
+    const org = await orgsRepository.create({
+      id: 'org-01',
+      name: 'Org',
+      admin_name: 'John Doe',
+      email: 'org@example.com',
+      password_hash: '123456',
+      cep: '21220000',
+      city: 'Rio de Janeiro',
+      address: 'Example St',
+      whatsapp: '21912345678',
+    })
+
+    await petsRepository.create({
+      name: 'Paçoca',
+      description: 'Cachorro sapeca que gosta de brincar.',
+      age: 'ADULT',
+      size: 'MEDIUM',
+      energy_level: 'FUSSY',
+      independence_level: 'MEDIUM',
+      environment: 'NORMAL',
+      images: [''],
+      requirement: '',
+      updated_at: new Date(),
+      org_id: org.id,
+    })
+
+    await expect(() =>
+      sut.execute({
+        city: 'Niterói',
+        size: 'SMALL',
+        age: null,
+        energyLevel: null,
+        environment: null,
+        independenceLevel: null,
+      }),
+    ).rejects.toBeInstanceOf(ResourceNotFoundError)
   })
 })
