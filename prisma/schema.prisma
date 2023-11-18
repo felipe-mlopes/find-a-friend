@@ -55,7 +55,7 @@ model Pet {
   independence_level IndependenceLevel
   environment        Environment
   images             String[]
-  requirement        String
+  requirement        String[]
   created_at         DateTime          @default(now())
   updated_at         DateTime
   org_id             String

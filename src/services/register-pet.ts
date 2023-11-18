@@ -19,7 +19,7 @@ interface ResgisterPetServiceRequest {
   independenceLevel: IndependenceLevel
   environment: Environment
   images: string[]
-  requirement: string
+  requirement: string[]
   orgId: string
 }
 

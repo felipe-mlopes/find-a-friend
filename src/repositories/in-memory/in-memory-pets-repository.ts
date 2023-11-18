@@ -17,7 +17,7 @@ export class InMemoryPetsRepository implements PetsRepository {
       independence_level: data.independence_level,
       environment: data.environment,
       images: [],
-      requirement: data.requirement,
+      requirement: [],
       created_at: new Date(),
       updated_at: new Date(),
       org_id: data.org_id,
