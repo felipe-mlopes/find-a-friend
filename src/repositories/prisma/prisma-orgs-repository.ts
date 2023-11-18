@@ -31,6 +31,27 @@ export class PrismaOrgsRepository implements OrgsRepository {
     return org
   }
 
+  async findByEmailOrName(email: string, name: string) {
+    const org = await prisma.org.findFirst({
+      where: {
+        OR: [
+          {
+            email: {
+              equals: email,
+            },
+          },
+          {
+            name: {
+              equals: name,
+            },
+          },
+        ],
+      },
+    })
+
+    return org
+  }
+
   async findByCity(city: string) {
     const orgs = await prisma.org.findMany({
       where: {
