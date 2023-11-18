@@ -23,7 +23,7 @@ export async function create(request: FastifyRequest, reply: FastifyReply) {
         message: 'O CEP não pode conter espaços em branco',
       }),
     address: z.string(),
-    whatsapp: z.number(),
+    whatsapp: z.string(),
   })
 
   const { name, adminName, email, cep, address, password, whatsapp } =
