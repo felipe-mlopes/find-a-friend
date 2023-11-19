@@ -1,6 +1,7 @@
 import { Prisma } from '@prisma/client'
+
 import { OrgsRepository } from '../orgs-repositories'
-import { prisma } from '../../lib/prisma'
+import { prisma } from '@/lib/prisma'
 
 export class PrismaOrgsRepository implements OrgsRepository {
   async create(data: Prisma.OrgCreateInput) {

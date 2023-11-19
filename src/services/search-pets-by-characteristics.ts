@@ -1,6 +1,7 @@
 import { Pet } from '@prisma/client'
-import { PetQuery, PetsRepository } from '../repositories/pets-repositories'
-import { OrgsRepository } from '../repositories/orgs-repositories'
+
+import { PetQuery, PetsRepository } from '@/repositories/pets-repositories'
+import { OrgsRepository } from '@/repositories/orgs-repositories'
 import { ResourceNotFoundError } from './errors/resource-not-found-error'
 
 type SearchPetsByCharacteristicsServiceRequest = PetQuery

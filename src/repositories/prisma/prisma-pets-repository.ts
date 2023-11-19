@@ -7,8 +7,9 @@ import {
   IndependenceLevel,
   Environment,
 } from '@prisma/client'
+
 import { PetQuery, PetsRepository } from '../pets-repositories'
-import { prisma } from '../../lib/prisma'
+import { prisma } from '@/lib/prisma'
 
 interface SearchPetProps {
   age?: Age
