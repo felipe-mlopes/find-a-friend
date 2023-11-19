@@ -1,11 +1,11 @@
 import { FastifyInstance } from 'fastify'
 
-import { create } from './create'
+import { register } from './register'
 import { authenticate } from './authenticate'
 import { refresh } from './refresh'
 
 export async function orgsRoutes(app: FastifyInstance) {
-  app.post('/orgs', create)
+  app.post('/register', register)
   app.post('/session', authenticate)
 
   app.patch('/token/refresh', refresh)
