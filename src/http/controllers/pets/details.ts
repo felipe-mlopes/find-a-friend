@@ -1,18 +1,19 @@
 import { FastifyReply, FastifyRequest } from 'fastify'
 import { z } from 'zod'
-import { MakeGetSpecificPetDetailsService } from '../../../services/factories/make-get-specific-pet-details-service'
+
+import { makeGetSpecificPetDetailsService } from '@/services/factories/make-get-specific-pet-details-service'
 
 export async function details(request: FastifyRequest, reply: FastifyReply) {
   const getPetDetailsParamsSchema = z.object({
-    petId: z.string().uuid(),
+    id: z.string().uuid(),
   })
 
-  const { petId } = getPetDetailsParamsSchema.parse(request.params)
+  const { id } = getPetDetailsParamsSchema.parse(request.params)
 
-  const getPetDetailsService = MakeGetSpecificPetDetailsService()
+  const getPetDetailsService = makeGetSpecificPetDetailsService()
 
   const { pet } = await getPetDetailsService.execute({
-    petId,
+    petId: id,
   })
 
   return reply.status(200).send({ pet })
