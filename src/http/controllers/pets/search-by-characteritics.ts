@@ -1,7 +1,7 @@
 import { FastifyReply, FastifyRequest } from 'fastify'
 import { z } from 'zod'
 
-import { MakeSearchPetsByCharacteristicsService } from '../../../services/factories/make-search-pets-by-characteristics-service'
+import { makeSearchPetsByCharacteristicsService } from '@/services/factories/make-search-pets-by-characteristics-service'
 
 export async function searchByCharacteristics(
   request: FastifyRequest,
@@ -24,7 +24,7 @@ export async function searchByCharacteristics(
   const { age, energyLevel, environment, independenceLevel, size } =
     searchPetsQuerySchema.parse(request.query)
 
-  const searchPetService = MakeSearchPetsByCharacteristicsService()
+  const searchPetService = makeSearchPetsByCharacteristicsService()
 
   const { pets } = await searchPetService.execute({
     city,

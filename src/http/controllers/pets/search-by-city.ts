@@ -1,7 +1,7 @@
 import { FastifyReply, FastifyRequest } from 'fastify'
 import { z } from 'zod'
 
-import { MakeFetchAllPetsByCityService } from '../../../services/factories/make-fetch-all-pets-by-city-service'
+import { makeFetchAllPetsByCityService } from '@/services/factories/make-fetch-all-pets-by-city-service'
 
 export async function searchByCity(
   request: FastifyRequest,
@@ -13,7 +13,7 @@ export async function searchByCity(
 
   const { city } = fetchAllPetsByCityParamsSchema.parse(request.params)
 
-  const fecthByCityService = MakeFetchAllPetsByCityService()
+  const fecthByCityService = makeFetchAllPetsByCityService()
 
   const { pets } = await fecthByCityService.execute({
     city,
