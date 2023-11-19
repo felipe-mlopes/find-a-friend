@@ -1,6 +1,6 @@
 import { beforeEach, describe, expect, it } from 'vitest'
 
-import { InMemoryPetsRepository } from '../repositories/in-memory/in-memory-pets-repository'
+import { InMemoryPetsRepository } from '@/repositories/in-memory/in-memory-pets-repository'
 import { GetSpecificPetDetailsService } from './get-specific-pet-details'
 import { ResourceNotFoundError } from './errors/resource-not-found-error'
 
@@ -24,7 +24,7 @@ describe('Get Specific Pet Details Service', () => {
       independence_level: 'MEDIUM',
       size: 'MEDIUM',
       images: [''],
-      requirement: '',
+      requirement: [''],
       org_id: 'org-id',
       updated_at: new Date(),
     })

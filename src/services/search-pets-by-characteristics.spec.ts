@@ -1,7 +1,7 @@
 import { describe, beforeEach, it, expect } from 'vitest'
 
-import { InMemoryPetsRepository } from '../repositories/in-memory/in-memory-pets-repository'
-import { InMemoryOrgsRepository } from '../repositories/in-memory/in-memory-orgs-repository'
+import { InMemoryPetsRepository } from '@/repositories/in-memory/in-memory-pets-repository'
+import { InMemoryOrgsRepository } from '@/repositories/in-memory/in-memory-orgs-repository'
 import { SearchPetsByCharacteristicsService } from './search-pets-by-characteristics'
 import { ResourceNotFoundError } from './errors/resource-not-found-error'
 
@@ -40,7 +40,7 @@ describe('Seach Pets By Characteristics Service', () => {
       independence_level: 'MEDIUM',
       environment: 'NORMAL',
       images: [''],
-      requirement: '',
+      requirement: [''],
       updated_at: new Date(),
       org_id: org.id,
     })
@@ -54,7 +54,7 @@ describe('Seach Pets By Characteristics Service', () => {
       independence_level: 'MEDIUM',
       environment: 'TIGHT',
       images: [''],
-      requirement: '',
+      requirement: [''],
       updated_at: new Date(),
       org_id: org.id,
     })
@@ -99,7 +99,7 @@ describe('Seach Pets By Characteristics Service', () => {
       independence_level: 'MEDIUM',
       environment: 'NORMAL',
       images: [''],
-      requirement: '',
+      requirement: [''],
       updated_at: new Date(),
       org_id: org.id,
     })
@@ -113,7 +113,7 @@ describe('Seach Pets By Characteristics Service', () => {
       independence_level: 'MEDIUM',
       environment: 'TIGHT',
       images: [''],
-      requirement: '',
+      requirement: [''],
       updated_at: new Date(),
       org_id: org.id,
     })
@@ -153,7 +153,7 @@ describe('Seach Pets By Characteristics Service', () => {
       independence_level: 'MEDIUM',
       environment: 'NORMAL',
       images: [''],
-      requirement: '',
+      requirement: [''],
       updated_at: new Date(),
       org_id: org.id,
     })
