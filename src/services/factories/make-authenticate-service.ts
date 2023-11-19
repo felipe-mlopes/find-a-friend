@@ -1,7 +1,7 @@
-import { PrismaOrgsRepository } from '../../repositories/prisma/prisma-orgs-repository'
+import { PrismaOrgsRepository } from '@/repositories/prisma/prisma-orgs-repository'
 import { AuthenticateService } from '../authenticate'
 
-export function MakeAuthenticateService() {
+export function makeAuthenticateService() {
   const orgsRepository = new PrismaOrgsRepository()
   const service = new AuthenticateService(orgsRepository)
 
