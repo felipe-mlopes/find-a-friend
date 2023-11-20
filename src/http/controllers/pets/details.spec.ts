@@ -4,13 +4,7 @@ import { Pet } from '@prisma/client'
 
 import { app } from '@/app'
 import { createAndAuthenticateOrg } from '@/utils/test/create-and-authenticate-org'
-import { prisma } from '@/lib/prisma'
-
-interface TokenProps {
-  sub: string
-  iat: number
-  exp: number
-}
+import { TokenProps } from '@/@types/test/token'
 
 describe('Get Pet Details (e2e)', () => {
   beforeAll(async () => {
@@ -24,8 +18,6 @@ describe('Get Pet Details (e2e)', () => {
   it('should be able to get a specific pet details', async () => {
     const { token } = await createAndAuthenticateOrg(app)
     const { sub } = token as TokenProps
-
-    /* const org = await prisma.org.findFirstOrThrow() */
 
     const newPet = await request(app.server)
       .post('/pets/create')
@@ -42,8 +34,6 @@ describe('Get Pet Details (e2e)', () => {
         requirement: [''],
         orgId: sub,
       })
-
-    /* const newPet = await prisma.pet.findFirst() */
 
     const { id } = newPet.body.newPet.pet as Pet
 
