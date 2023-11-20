@@ -1,7 +1,7 @@
 import { FastifyInstance } from 'fastify'
 
 import { searchByCity } from './search-by-city'
-import { searchByCharacteristics } from './search-by-characteritics'
+import { searchByCharacteristics } from './search-by-characteristics'
 import { details } from './details'
 import { create } from './create'
 
