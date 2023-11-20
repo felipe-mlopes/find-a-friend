@@ -12,15 +12,14 @@ export async function searchByCharacteristics(
   })
 
   const searchPetsQuerySchema = z.object({
-    age: z.enum(['PUPPY', 'ADULT', 'SENIOR']).nullable(),
-    energyLevel: z.enum(['CALM', 'PEACEFUL', 'FUSSY']).nullable(),
-    size: z.enum(['SMALL', 'MEDIUM', 'BIG']).nullable(),
-    independenceLevel: z.enum(['LOW', 'MEDIUM', 'HIGH']).nullable(),
-    environment: z.enum(['TIGHT', 'NORMAL', 'WIDE']).nullable(),
+    age: z.enum(['PUPPY', 'ADULT', 'SENIOR']).optional(),
+    energyLevel: z.enum(['CALM', 'PEACEFUL', 'FUSSY']).optional(),
+    size: z.enum(['SMALL', 'MEDIUM', 'BIG']).optional(),
+    independenceLevel: z.enum(['LOW', 'MEDIUM', 'HIGH']).optional(),
+    environment: z.enum(['TIGHT', 'NORMAL', 'WIDE']).optional(),
   })
 
   const { city } = searchPetsParamsSchema.parse(request.params)
-
   const { age, energyLevel, environment, independenceLevel, size } =
     searchPetsQuerySchema.parse(request.query)
 
@@ -28,11 +27,11 @@ export async function searchByCharacteristics(
 
   const { pets } = await searchPetService.execute({
     city,
-    age,
-    energyLevel,
-    environment,
-    independenceLevel,
-    size,
+    age: age ?? null,
+    energyLevel: energyLevel ?? null,
+    environment: environment ?? null,
+    independenceLevel: independenceLevel ?? null,
+    size: size ?? null,
   })
 
   return reply.status(200).send({ pets })
