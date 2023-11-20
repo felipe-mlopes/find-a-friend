@@ -16,11 +16,11 @@
 - [x] Um pet deve estar ligado a uma ORG
 - [ ] O usuário que quer adotar, entrará em contato com a ORG via WhatsApp
 - [x] Todos os filtros, além da cidade, são opcionais
-- [ ] Para uma ORG acessar a aplicação como admin, ela precisa estar logada
+- [x] Para uma ORG acessar a aplicação como admin, ela precisa estar logada
 
 ## RNFs (Requisitos não-funcionais)
 
-- [ ] A senha do usuário precisa estar criptografada;
-- [ ] Os dados da aplicação precisam estar persistidos em um banco PostgreSQL;
-- [ ] Todas listas de dados precisam estar paginadas com 16 itens por página;
-- [ ] O usuário deve ser identificado por um JWT (JSON Web Token);
+- [x] A senha do usuário precisa estar criptografada;
+- [x] Os dados da aplicação precisam estar persistidos em um banco PostgreSQL;
+- [ ] As listas de pets precisam estar paginadas com 9 itens por página;
+- [x] O usuário deve ser identificado por um JWT (JSON Web Token);
