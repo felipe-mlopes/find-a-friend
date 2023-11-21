@@ -36,45 +36,48 @@ export class InMemoryPetsRepository implements PetsRepository {
     return pet
   }
 
-  async findManyOrgs(orgs: Org[]) {
+  async findManyOrgs(orgs: Org[], page: number) {
     const orgsIdArray = orgs.map((org) => org.id)
 
-    return this.items.filter((item) => orgsIdArray.includes(item.org_id))
+    return this.items
+      .filter((item) => orgsIdArray.includes(item.org_id))
+      .slice((page - 1) * 9, page * 9)
   }
 
-  async findManyByQuery({
-    age,
-    size,
-    energyLevel,
-    independenceLevel,
-    environment,
-  }: PetQuery) {
+  async findManyByQuery(
+    { age, size, energyLevel, independenceLevel, environment }: PetQuery,
+    page: number,
+  ) {
     let petsFiltered = this.items
 
     if (age) {
-      petsFiltered = this.items.filter((item) => item.age === age)
+      petsFiltered = this.items
+        .filter((item) => item.age === age)
+        .slice((page - 1) * 9, page * 9)
     }
 
     if (size) {
-      petsFiltered = this.items.filter((item) => item.size === size)
+      petsFiltered = this.items
+        .filter((item) => item.size === size)
+        .slice((page - 1) * 9, page * 9)
     }
 
     if (energyLevel) {
-      petsFiltered = this.items.filter(
-        (item) => item.energy_level === energyLevel,
-      )
+      petsFiltered = this.items
+        .filter((item) => item.energy_level === energyLevel)
+        .slice((page - 1) * 9, page * 9)
     }
 
     if (independenceLevel) {
-      petsFiltered = this.items.filter(
-        (item) => item.independence_level === independenceLevel,
-      )
+      petsFiltered = this.items
+        .filter((item) => item.independence_level === independenceLevel)
+        .slice((page - 1) * 9, page * 9)
     }
 
     if (environment) {
-      petsFiltered = this.items.filter(
-        (item) => item.environment === environment,
-      )
+      petsFiltered = this.items
+        .filter((item) => item.environment === environment)
+        .slice((page - 1) * 9, page * 9)
     }
 
     return petsFiltered
