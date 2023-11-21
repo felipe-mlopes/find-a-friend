@@ -38,7 +38,7 @@ export class PrismaPetsRepository implements PetsRepository {
     return pet
   }
 
-  async findManyOrgs(orgs: Org[]) {
+  async findManyOrgs(orgs: Org[], page: number) {
     const orgsIdArray = orgs.map((org) => org.id)
 
     const pets = prisma.pet.findMany({
@@ -47,19 +47,17 @@ export class PrismaPetsRepository implements PetsRepository {
           in: orgsIdArray,
         },
       },
+      take: 9,
+      skip: (page - 1) * 9,
     })
 
     return pets
   }
 
-  async findManyByQuery({
-    city,
-    age,
-    size,
-    energyLevel,
-    independenceLevel,
-    environment,
-  }: PetQuery) {
+  async findManyByQuery(
+    { city, age, size, energyLevel, independenceLevel, environment }: PetQuery,
+    page: number,
+  ) {
     const query: SearchPetProps = {}
 
     if (age !== null) query.age = age
@@ -79,6 +77,8 @@ export class PrismaPetsRepository implements PetsRepository {
         },
         ...query,
       },
+      take: 9,
+      skip: (page - 1) * 9,
     })
 
     return pets
