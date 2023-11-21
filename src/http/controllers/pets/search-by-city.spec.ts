@@ -14,7 +14,7 @@ describe('Search pets by city (e2e)', () => {
     await app.close()
   })
 
-  it('should be able to seach pets by city', async () => {
+  it('should be able to search pets by city', async () => {
     const { token } = await createAndAuthenticateOrg(app)
     const { sub } = token as TokenProps
 
@@ -50,11 +50,10 @@ describe('Search pets by city (e2e)', () => {
         orgId: sub,
       })
 
-    const city = 'Rio de Janeiro'
-
     const response = await request(app.server)
-      .get(`/pets/${city}`)
-      .send({ city })
+      .get('/pets')
+      .query({ city: 'Rio de Janeiro' })
+      .send()
 
     expect(response.statusCode).toEqual(200)
     expect(response.body.pets).toHaveLength(2)
