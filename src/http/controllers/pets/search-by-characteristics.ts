@@ -17,21 +17,25 @@ export async function searchByCharacteristics(
     size: z.enum(['SMALL', 'MEDIUM', 'BIG']).optional(),
     independenceLevel: z.enum(['LOW', 'MEDIUM', 'HIGH']).optional(),
     environment: z.enum(['TIGHT', 'NORMAL', 'WIDE']).optional(),
+    page: z.coerce.number().min(1).default(1),
   })
 
   const { city } = searchPetsParamsSchema.parse(request.params)
-  const { age, energyLevel, environment, independenceLevel, size } =
+  const { age, energyLevel, environment, independenceLevel, size, page } =
     searchPetsQuerySchema.parse(request.query)
 
   const searchPetService = makeSearchPetsByCharacteristicsService()
 
   const { pets } = await searchPetService.execute({
-    city,
-    age: age ?? null,
-    energyLevel: energyLevel ?? null,
-    environment: environment ?? null,
-    independenceLevel: independenceLevel ?? null,
-    size: size ?? null,
+    query: {
+      city,
+      age: age ?? null,
+      energyLevel: energyLevel ?? null,
+      environment: environment ?? null,
+      independenceLevel: independenceLevel ?? null,
+      size: size ?? null,
+    },
+    page,
   })
 
   return reply.status(200).send({ pets })

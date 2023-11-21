@@ -7,16 +7,18 @@ export async function searchByCity(
   request: FastifyRequest,
   reply: FastifyReply,
 ) {
-  const fetchAllPetsByCityParamsSchema = z.object({
+  const fetchAllPetsByCityQuerySchema = z.object({
     city: z.string(),
+    page: z.coerce.number().min(1).default(1),
   })
 
-  const { city } = fetchAllPetsByCityParamsSchema.parse(request.params)
+  const { city, page } = fetchAllPetsByCityQuerySchema.parse(request.query)
 
   const fecthByCityService = makeFetchAllPetsByCityService()
 
   const { pets } = await fecthByCityService.execute({
-    city,
+    query: city,
+    page,
   })
 
   return reply.status(200).send({ pets })
