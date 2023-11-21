@@ -8,7 +8,7 @@ import { create } from './create'
 import { verifyJWT } from '@/http/middlewares/verify-jwt'
 
 export async function petsRoutes(app: FastifyInstance) {
-  app.get('/pets/:city', searchByCity)
+  app.get('/pets', searchByCity)
   app.get('/pets/search/:city', searchByCharacteristics)
   app.get('/pets/pet/:id', details)
 
