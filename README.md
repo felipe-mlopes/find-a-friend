@@ -22,5 +22,5 @@
 
 - [x] A senha do usuário precisa estar criptografada;
 - [x] Os dados da aplicação precisam estar persistidos em um banco PostgreSQL;
-- [ ] As listas de pets precisam estar paginadas com 9 itens por página;
+- [x] As listas de pets precisam estar paginadas com 9 itens por página;
 - [x] O usuário deve ser identificado por um JWT (JSON Web Token);
