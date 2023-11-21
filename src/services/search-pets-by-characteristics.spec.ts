@@ -9,7 +9,7 @@ let petsRepository: InMemoryPetsRepository
 let orgsRepository: InMemoryOrgsRepository
 let sut: SearchPetsByCharacteristicsService
 
-describe('Seach Pets By Characteristics Service', () => {
+describe('Search Pets By Characteristics Service', () => {
   beforeEach(() => {
     petsRepository = new InMemoryPetsRepository()
     orgsRepository = new InMemoryOrgsRepository()
@@ -60,12 +60,15 @@ describe('Seach Pets By Characteristics Service', () => {
     })
 
     const { pets } = await sut.execute({
-      city,
-      age: 'ADULT',
-      energyLevel: null,
-      environment: null,
-      independenceLevel: null,
-      size: null,
+      query: {
+        city,
+        age: 'ADULT',
+        energyLevel: null,
+        environment: null,
+        independenceLevel: null,
+        size: null,
+      },
+      page: 1,
     })
 
     expect(pets).toHaveLength(2)
@@ -119,12 +122,15 @@ describe('Seach Pets By Characteristics Service', () => {
     })
 
     const { pets } = await sut.execute({
-      city,
-      age: 'ADULT',
-      energyLevel: 'FUSSY',
-      environment: 'TIGHT',
-      independenceLevel: 'MEDIUM',
-      size: 'MEDIUM',
+      query: {
+        city,
+        age: 'ADULT',
+        energyLevel: 'FUSSY',
+        environment: 'TIGHT',
+        independenceLevel: 'MEDIUM',
+        size: 'MEDIUM',
+      },
+      page: 1,
     })
 
     expect(pets).toHaveLength(1)
@@ -160,13 +166,66 @@ describe('Seach Pets By Characteristics Service', () => {
 
     await expect(() =>
       sut.execute({
-        city: 'Niterói',
-        size: 'SMALL',
-        age: null,
-        energyLevel: null,
-        environment: null,
-        independenceLevel: null,
+        query: {
+          city: 'Niterói',
+          size: 'SMALL',
+          age: null,
+          energyLevel: null,
+          environment: null,
+          independenceLevel: null,
+        },
+        page: 1,
       }),
     ).rejects.toBeInstanceOf(ResourceNotFoundError)
+  })
+
+  it('should be able to search paginated pets by characteristics', async () => {
+    const city = 'Rio de Janeiro'
+
+    const org = await orgsRepository.create({
+      id: 'org-01',
+      name: 'Org',
+      admin_name: 'John Doe',
+      email: 'org@example.com',
+      password_hash: '123456',
+      cep: '21220000',
+      city,
+      address: 'Example St',
+      whatsapp: '21912345678',
+    })
+
+    for (let i = 1; i <= 11; i++) {
+      await petsRepository.create({
+        name: `Paçoca ${i}`,
+        description: 'Cachorro sapeca que gosta de brincar.',
+        age: 'ADULT',
+        size: 'MEDIUM',
+        energy_level: 'FUSSY',
+        independence_level: 'MEDIUM',
+        environment: 'NORMAL',
+        images: [''],
+        requirement: [''],
+        updated_at: new Date(),
+        org_id: org.id,
+      })
+    }
+
+    const { pets } = await sut.execute({
+      query: {
+        city,
+        age: 'ADULT',
+        size: 'MEDIUM',
+        energyLevel: 'FUSSY',
+        independenceLevel: 'MEDIUM',
+        environment: 'NORMAL',
+      },
+      page: 2,
+    })
+
+    expect(pets).toHaveLength(2)
+    expect(pets).toEqual([
+      expect.objectContaining({ name: 'Paçoca 10' }),
+      expect.objectContaining({ name: 'Paçoca 11' }),
+    ])
   })
 })
