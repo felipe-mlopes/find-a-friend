@@ -5,7 +5,10 @@ import { makeCreateOrgService } from '@/services/factories/make-create-org-servi
 import { OrgAlreadyExistsError } from '@/services/errors/org-already-exists-error'
 import { InvalidCEPError } from '@/services/errors/invalid-cep-error'
 
-export async function register(request: FastifyRequest, reply: FastifyReply) {
+export async function createOrgController(
+  request: FastifyRequest,
+  reply: FastifyReply,
+) {
   const createBodySchema = z.object({
     name: z.string(),
     adminName: z.string(),
@@ -53,5 +56,5 @@ export async function register(request: FastifyRequest, reply: FastifyReply) {
     throw err
   }
 
-  return reply.status(201).send()
+  return reply.status(201).send({ message: 'Register was successful.' })
 }
