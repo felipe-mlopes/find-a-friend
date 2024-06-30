@@ -15,8 +15,8 @@ interface RegisterPetServiceRequest {
   description: string
   age: Age
   size: Size
-  energyLevel: EnergyLevel
-  independenceLevel: IndependenceLevel
+  independence_level: IndependenceLevel
+  energy_level: EnergyLevel
   environment: Environment
   images: string[]
   requirement: string[]
@@ -38,8 +38,8 @@ export class RegisterPetService {
     description,
     age,
     size,
-    energyLevel,
-    independenceLevel,
+    independence_level,
+    energy_level,
     environment,
     images,
     requirement,
@@ -56,8 +56,8 @@ export class RegisterPetService {
       description,
       age,
       size,
-      energy_level: energyLevel,
-      independence_level: independenceLevel,
+      independence_level,
+      energy_level,
       environment,
       images,
       requirement,
