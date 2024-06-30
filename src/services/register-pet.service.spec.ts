@@ -2,17 +2,17 @@ import { describe, beforeEach, it, expect } from 'vitest'
 
 import { InMemoryPetsRepository } from '@/repositories/in-memory/in-memory-pets-repository'
 import { InMemoryOrgsRepository } from '@/repositories/in-memory/in-memory-orgs-repository'
-import { CreatePetService } from './create-pet'
+import { RegisterPetService } from './register-pet.service'
 
 let petsRepository: InMemoryPetsRepository
 let orgsRepository: InMemoryOrgsRepository
-let sut: CreatePetService
+let sut: RegisterPetService
 
 describe('Pet Register Service', () => {
   beforeEach(() => {
     petsRepository = new InMemoryPetsRepository()
     orgsRepository = new InMemoryOrgsRepository()
-    sut = new CreatePetService(petsRepository, orgsRepository)
+    sut = new RegisterPetService(petsRepository, orgsRepository)
   })
 
   it('should be to able register a pet', async () => {
@@ -32,12 +32,12 @@ describe('Pet Register Service', () => {
       name: 'Paçoca',
       description: 'bla bla',
       age: 'PUPPY',
-      energyLevel: 'FUSSY',
+      size: 'MEDIUM',
+      independence_level: 'MEDIUM',
+      energy_level: 'FUSSY',
       environment: 'NORMAL',
       images: [''],
-      independenceLevel: 'MEDIUM',
       requirement: [''],
-      size: 'MEDIUM',
       orgId: id,
     })
 

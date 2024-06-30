@@ -28,6 +28,12 @@ export class InMemoryPetsRepository implements PetsRepository {
     return pet
   }
 
+  async findAll(page: number) {
+    const pets = this.items.slice((page - 1) * 9, page * 9)
+
+    return pets
+  }
+
   async findById(id: string) {
     const pet = this.items.find((item) => item.id === id)
 

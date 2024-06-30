@@ -4,7 +4,7 @@ import { z } from 'zod'
 import { makeAuthenticateService } from '@/services/factories/make-authenticate-service'
 import { InvalidCredentialsError } from '@/services/errors/invalid-credentials-error'
 
-export async function authenticate(
+export async function authenticateAccountController(
   request: FastifyRequest,
   reply: FastifyReply,
 ) {
@@ -51,7 +51,7 @@ export async function authenticate(
       })
       .status(200)
       .send({
-        token,
+        access_token: token,
       })
   } catch (err) {
     if (err instanceof InvalidCredentialsError) {

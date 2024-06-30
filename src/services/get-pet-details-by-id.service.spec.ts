@@ -1,19 +1,19 @@
 import { beforeEach, describe, expect, it } from 'vitest'
 
 import { InMemoryPetsRepository } from '@/repositories/in-memory/in-memory-pets-repository'
-import { GetSpecificPetDetailsService } from './get-specific-pet-details'
+import { GetPetDetailsByIdService } from './get-pet-details-by-id.service'
 import { ResourceNotFoundError } from './errors/resource-not-found-error'
 
 let petsRepository: InMemoryPetsRepository
-let sut: GetSpecificPetDetailsService
+let sut: GetPetDetailsByIdService
 
-describe('Get Specific Pet Details Service', () => {
+describe('Get Pet Details By Id Service', () => {
   beforeEach(() => {
     petsRepository = new InMemoryPetsRepository()
-    sut = new GetSpecificPetDetailsService(petsRepository)
+    sut = new GetPetDetailsByIdService(petsRepository)
   })
 
-  it('should be able to get specific pet details', async () => {
+  it('should be able to get pet details by id', async () => {
     const specificPet = await petsRepository.create({
       id: 'pet-01',
       name: 'Paçoca',

@@ -3,20 +3,20 @@ import { Pet } from '@prisma/client'
 import { PetsRepository } from '@/repositories/pets-repositories'
 import { ResourceNotFoundError } from './errors/resource-not-found-error'
 
-interface GetSpecificPetDetailsServiceRequest {
+interface GetPetDetailsByIdServiceRequest {
   petId: string
 }
 
-interface GetSpecificPetDetailsServiceResponse {
+interface GetPetDetailsByIdServiceResponse {
   pet: Pet
 }
 
-export class GetSpecificPetDetailsService {
+export class GetPetDetailsByIdService {
   constructor(private petsRepository: PetsRepository) {}
 
   async execute({
     petId,
-  }: GetSpecificPetDetailsServiceRequest): Promise<GetSpecificPetDetailsServiceResponse> {
+  }: GetPetDetailsByIdServiceRequest): Promise<GetPetDetailsByIdServiceResponse> {
     const pet = await this.petsRepository.findById(petId)
 
     if (!pet) {

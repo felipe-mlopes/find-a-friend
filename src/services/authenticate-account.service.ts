@@ -4,22 +4,22 @@ import { Org } from '@prisma/client'
 import { OrgsRepository } from '@/repositories/orgs-repositories'
 import { InvalidCredentialsError } from './errors/invalid-credentials-error'
 
-interface AuthenticateServiceRequest {
+interface AuthenticateAccountServiceRequest {
   email: string
   password: string
 }
 
-interface AuthenticateServiceResponse {
+interface AuthenticateAccountServiceResponse {
   org: Org
 }
 
-export class AuthenticateService {
+export class AuthenticateAccountService {
   constructor(private orgsRepository: OrgsRepository) {}
 
   async execute({
     email,
     password,
-  }: AuthenticateServiceRequest): Promise<AuthenticateServiceResponse> {
+  }: AuthenticateAccountServiceRequest): Promise<AuthenticateAccountServiceResponse> {
     const org = await this.orgsRepository.findByEmail(email)
 
     if (!org) {

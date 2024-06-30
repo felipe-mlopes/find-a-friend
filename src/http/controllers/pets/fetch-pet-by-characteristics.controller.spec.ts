@@ -5,7 +5,7 @@ import { app } from '@/app'
 import { createAndAuthenticateOrg } from '@/utils/test/create-and-authenticate-org'
 import { TokenProps } from '@/@types/test/token'
 
-describe('Search pets by city (e2e)', () => {
+describe('Fetch Pets by Characteristics (e2e)', () => {
   beforeAll(async () => {
     await app.ready()
   })
@@ -14,20 +14,20 @@ describe('Search pets by city (e2e)', () => {
     await app.close()
   })
 
-  it('should be able to search pets by city', async () => {
-    const { token } = await createAndAuthenticateOrg(app)
-    const { sub } = token as TokenProps
+  it('should be able to fetch pets by characteristics', async () => {
+    const { access_token } = await createAndAuthenticateOrg(app)
+    const { sub } = access_token as TokenProps
 
     await request(app.server)
       .post('/pets/create')
-      .set('Authorization', `Bearer ${token}`)
+      .set('Authorization', `Bearer ${access_token}`)
       .send({
         name: 'Paçoca',
         description: '',
         age: 'PUPPY',
-        energyLevel: 'FUSSY',
         size: 'MEDIUM',
-        independenceLevel: 'MEDIUM',
+        independence_level: 'MEDIUM',
+        energy_level: 'FUSSY',
         environment: 'NORMAL',
         images: [''],
         requirement: [''],
@@ -36,26 +36,37 @@ describe('Search pets by city (e2e)', () => {
 
     await request(app.server)
       .post('/pets/create')
-      .set('Authorization', `Bearer ${token}`)
+      .set('Authorization', `Bearer ${access_token}`)
       .send({
         name: 'Pitoco',
         description: '',
-        age: 'PUPPY',
-        energyLevel: 'FUSSY',
-        size: 'MEDIUM',
-        independenceLevel: 'MEDIUM',
-        environment: 'NORMAL',
+        age: 'ADULT',
+        size: 'SMALL',
+        independence_level: 'HIGH',
+        energy_level: 'PEACEFUL',
+        environment: 'WIDE',
         images: [''],
         requirement: [''],
         orgId: sub,
       })
 
+    const city = 'Rio de Janeiro'
+
     const response = await request(app.server)
-      .get('/pets')
-      .query({ city: 'Rio de Janeiro' })
-      .send()
+      .get(`/pets/search/${city}`)
+      .query({
+        age: 'ADULT',
+      })
+      .send({
+        city,
+      })
 
     expect(response.statusCode).toEqual(200)
-    expect(response.body.pets).toHaveLength(2)
+    expect(response.body.pets).toHaveLength(1)
+    expect(response.body.pets[0]).toEqual(
+      expect.objectContaining({
+        name: 'Pitoco',
+      }),
+    )
   })
 })

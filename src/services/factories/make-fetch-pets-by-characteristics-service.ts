@@ -1,11 +1,15 @@
 import { PrismaOrgsRepository } from '@/repositories/prisma/prisma-orgs-repository'
 import { PrismaPetsRepository } from '@/repositories/prisma/prisma-pets-repository'
-import { CreatePetService } from '../create-pet'
+import { FetchPetsByCharacteristicsService } from '../fetch-pet-by-characteristics.service'
 
-export function makeCreatePetService() {
+export function makeFetchPetsByCharacteristicsService() {
   const petsRepository = new PrismaPetsRepository()
   const orgsRepository = new PrismaOrgsRepository()
-  const service = new CreatePetService(petsRepository, orgsRepository)
+
+  const service = new FetchPetsByCharacteristicsService(
+    petsRepository,
+    orgsRepository,
+  )
 
   return service
 }

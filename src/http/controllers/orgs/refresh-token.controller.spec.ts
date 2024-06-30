@@ -37,7 +37,7 @@ describe('Register Org (e2e)', () => {
 
     expect(response.status).toEqual(200)
     expect(response.body).toEqual({
-      token: expect.any(String),
+      refresh_token: expect.any(String),
     })
     expect(response.get('Set-Cookie')).toEqual([
       expect.stringContaining('refreshToken='),
