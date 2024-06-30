@@ -21,6 +21,7 @@ export interface PetQuery {
 export interface PetsRepository {
   create(data: Prisma.PetUncheckedCreateInput): Promise<Pet>
   findById(id: string): Promise<Pet | null>
+  findAll(page: number): Promise<Pet[]>
   findManyOrgs(orgs: Org[], page: number): Promise<Pet[]>
   findManyByQuery(query: PetQuery, page: number): Promise<Pet[]>
 }

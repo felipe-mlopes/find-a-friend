@@ -28,6 +28,15 @@ export class PrismaPetsRepository implements PetsRepository {
     return pet
   }
 
+  async findAll(page: number) {
+    const pets = await prisma.pet.findMany({
+      take: 9,
+      skip: (page - 1) * 9,
+    })
+
+    return pets
+  }
+
   async findById(id: string) {
     const pet = await prisma.pet.findUnique({
       where: {
