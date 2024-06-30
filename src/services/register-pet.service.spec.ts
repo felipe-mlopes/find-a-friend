@@ -32,12 +32,12 @@ describe('Pet Register Service', () => {
       name: 'Paçoca',
       description: 'bla bla',
       age: 'PUPPY',
-      energyLevel: 'FUSSY',
+      size: 'MEDIUM',
+      independence_level: 'MEDIUM',
+      energy_level: 'FUSSY',
       environment: 'NORMAL',
       images: [''],
-      independenceLevel: 'MEDIUM',
       requirement: [''],
-      size: 'MEDIUM',
       orgId: id,
     })
 
