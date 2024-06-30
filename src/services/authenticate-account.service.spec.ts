@@ -2,16 +2,16 @@ import { beforeEach, describe, expect, it } from 'vitest'
 import { hash } from 'bcrypt'
 
 import { InMemoryOrgsRepository } from '@/repositories/in-memory/in-memory-orgs-repository'
-import { AuthenticateService } from './authenticate'
+import { AuthenticateAccountService } from './authenticate-account.service'
 import { InvalidCredentialsError } from './errors/invalid-credentials-error'
 
 let orgsRepository: InMemoryOrgsRepository
-let sut: AuthenticateService
+let sut: AuthenticateAccountService
 
-describe('Authenticate Service', () => {
+describe('Authenticate Account Service', () => {
   beforeEach(async () => {
     orgsRepository = new InMemoryOrgsRepository()
-    sut = new AuthenticateService(orgsRepository)
+    sut = new AuthenticateAccountService(orgsRepository)
 
     await orgsRepository.create({
       name: 'Org',
@@ -25,7 +25,7 @@ describe('Authenticate Service', () => {
     })
   })
 
-  it('should be able to authenticate', async () => {
+  it('should be able to authenticate account', async () => {
     const { org } = await sut.execute({
       email: 'org@example.com',
       password: '123456',
@@ -34,7 +34,7 @@ describe('Authenticate Service', () => {
     expect(org.id).toEqual(expect.any(String))
   })
 
-  it('should not be able to authenticate with wrong email', async () => {
+  it('should not be able to authenticate account with wrong email', async () => {
     await expect(() =>
       sut.execute({
         email: 'johndoe@example.com',
@@ -43,7 +43,7 @@ describe('Authenticate Service', () => {
     ).rejects.toBeInstanceOf(InvalidCredentialsError)
   })
 
-  it('should not be able to authenticate with wrong password', async () => {
+  it('should not be able to authenticate account with wrong password', async () => {
     await expect(() =>
       sut.execute({
         email: 'org@example.com',
