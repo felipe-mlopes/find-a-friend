@@ -2,21 +2,21 @@ import { describe, beforeEach, it, expect } from 'vitest'
 
 import { InMemoryPetsRepository } from '@/repositories/in-memory/in-memory-pets-repository'
 import { InMemoryOrgsRepository } from '@/repositories/in-memory/in-memory-orgs-repository'
-import { SearchPetsByCharacteristicsService } from './search-pets-by-characteristics'
+import { FetchPetsByCharacteristicsService } from './fetch-pet-by-characteristics.service'
 import { ResourceNotFoundError } from './errors/resource-not-found-error'
 
 let petsRepository: InMemoryPetsRepository
 let orgsRepository: InMemoryOrgsRepository
-let sut: SearchPetsByCharacteristicsService
+let sut: FetchPetsByCharacteristicsService
 
-describe('Search Pets By Characteristics Service', () => {
+describe('Fetch Pets By Characteristics Service', () => {
   beforeEach(() => {
     petsRepository = new InMemoryPetsRepository()
     orgsRepository = new InMemoryOrgsRepository()
-    sut = new SearchPetsByCharacteristicsService(petsRepository, orgsRepository)
+    sut = new FetchPetsByCharacteristicsService(petsRepository, orgsRepository)
   })
 
-  it('should be able to search pets by one characteristic', async () => {
+  it('should be able to fecth pets by one characteristic', async () => {
     const city = 'Rio de Janeiro'
 
     const org = await orgsRepository.create({
@@ -78,7 +78,7 @@ describe('Search Pets By Characteristics Service', () => {
     ])
   })
 
-  it('should be able to search pets by all characteristics', async () => {
+  it('should be able to fetch pets by all characteristics', async () => {
     const city = 'Rio de Janeiro'
 
     const org = await orgsRepository.create({
@@ -137,7 +137,7 @@ describe('Search Pets By Characteristics Service', () => {
     expect(pets).toEqual([expect.objectContaining({ energy_level: 'FUSSY' })])
   })
 
-  it('should not be able to search for pets in the non-existent city', async () => {
+  it('should not be able to fetch for pets in the non-existent city', async () => {
     const org = await orgsRepository.create({
       id: 'org-01',
       name: 'Org',
@@ -179,7 +179,7 @@ describe('Search Pets By Characteristics Service', () => {
     ).rejects.toBeInstanceOf(ResourceNotFoundError)
   })
 
-  it('should be able to search paginated pets by characteristics', async () => {
+  it('should be able to fetch paginated pets by characteristics', async () => {
     const city = 'Rio de Janeiro'
 
     const org = await orgsRepository.create({
