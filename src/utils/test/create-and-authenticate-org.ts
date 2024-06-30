@@ -9,7 +9,7 @@ export async function createAndAuthenticateOrg(app: FastifyInstance) {
     data: {
       name: 'Adota Pet',
       admin_name: 'Fulano',
-      email: 'fulano@example.com',
+      email: 'fulano-teste@example.com',
       password_hash: await hash('123456', 6),
       cep: '21220000',
       address: 'Rua teste',
@@ -19,13 +19,13 @@ export async function createAndAuthenticateOrg(app: FastifyInstance) {
   })
 
   const authResponse = await request(app.server).post('/session').send({
-    email: 'fulano@example.com',
+    email: 'fulano-teste@example.com',
     password: '123456',
   })
 
-  const { token } = authResponse.body
+  const { access_token } = authResponse.body
 
   return {
-    token,
+    access_token,
   }
 }
