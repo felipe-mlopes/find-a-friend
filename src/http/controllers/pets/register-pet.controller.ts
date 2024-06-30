@@ -11,9 +11,9 @@ export async function registerPetController(
     name: z.string(),
     description: z.string(),
     age: z.enum(['PUPPY', 'ADULT', 'SENIOR']),
-    energyLevel: z.enum(['CALM', 'PEACEFUL', 'FUSSY']),
     size: z.enum(['SMALL', 'MEDIUM', 'BIG']),
-    independenceLevel: z.enum(['LOW', 'MEDIUM', 'HIGH']),
+    independence_level: z.enum(['LOW', 'MEDIUM', 'HIGH']),
+    energy_level: z.enum(['CALM', 'PEACEFUL', 'FUSSY']),
     environment: z.enum(['TIGHT', 'NORMAL', 'WIDE']),
     images: z.string().array(),
     requirement: z.string().array(),
@@ -25,9 +25,9 @@ export async function registerPetController(
     name,
     description,
     age,
-    energyLevel,
     size,
-    independenceLevel,
+    independence_level,
+    energy_level,
     environment,
     images,
     requirement,
@@ -35,18 +35,18 @@ export async function registerPetController(
 
   const registerPetService = makeRegisterPetService()
 
-  await registerPetService.execute({
-    orgId,
+  const newPet = await registerPetService.execute({
     name,
     description,
     age,
-    energyLevel,
     size,
-    independenceLevel,
+    independence_level,
+    energy_level,
     environment,
     images,
     requirement,
+    orgId,
   })
 
-  return reply.status(201).send({ message: 'Register was successful.' })
+  return reply.status(201).send({ petId: newPet.pet.id })
 }
