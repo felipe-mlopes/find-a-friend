@@ -1,9 +1,13 @@
 import { FastifyReply, FastifyRequest } from 'fastify'
 import { z } from 'zod'
-import { makeCreatePetService } from '@/services/factories/make-create-pet-service'
 
-export async function create(request: FastifyRequest, reply: FastifyReply) {
-  const createPetBodySchema = z.object({
+import { makeRegisterPetService } from '@/services/factories/make-register-pet-service'
+
+export async function registerPetController(
+  request: FastifyRequest,
+  reply: FastifyReply,
+) {
+  const registerPetBodySchema = z.object({
     name: z.string(),
     description: z.string(),
     age: z.enum(['PUPPY', 'ADULT', 'SENIOR']),
@@ -27,11 +31,11 @@ export async function create(request: FastifyRequest, reply: FastifyReply) {
     environment,
     images,
     requirement,
-  } = createPetBodySchema.parse(request.body)
+  } = registerPetBodySchema.parse(request.body)
 
-  const createPetService = makeCreatePetService()
+  const registerPetService = makeRegisterPetService()
 
-  const newPet = await createPetService.execute({
+  await registerPetService.execute({
     orgId,
     name,
     description,
@@ -44,5 +48,5 @@ export async function create(request: FastifyRequest, reply: FastifyReply) {
     requirement,
   })
 
-  return reply.status(201).send({ newPet })
+  return reply.status(201).send({ message: 'Register was successful.' })
 }
