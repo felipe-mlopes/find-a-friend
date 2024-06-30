@@ -5,7 +5,7 @@ import { app } from '@/app'
 import { createAndAuthenticateOrg } from '@/utils/test/create-and-authenticate-org'
 import { TokenProps } from '@/@types/test/token'
 
-describe('Search pets by city (e2e)', () => {
+describe('Fetch Pets by Characteristics (e2e)', () => {
   beforeAll(async () => {
     await app.ready()
   })
@@ -14,7 +14,7 @@ describe('Search pets by city (e2e)', () => {
     await app.close()
   })
 
-  it('should be able to search pets by city', async () => {
+  it('should be able to fetch pets by characteristics', async () => {
     const { token } = await createAndAuthenticateOrg(app)
     const { sub } = token as TokenProps
 
@@ -40,22 +40,33 @@ describe('Search pets by city (e2e)', () => {
       .send({
         name: 'Pitoco',
         description: '',
-        age: 'PUPPY',
-        energyLevel: 'FUSSY',
-        size: 'MEDIUM',
-        independenceLevel: 'MEDIUM',
-        environment: 'NORMAL',
+        age: 'ADULT',
+        energyLevel: 'PEACEFUL',
+        size: 'SMALL',
+        independenceLevel: 'HIGH',
+        environment: 'WIDE',
         images: [''],
         requirement: [''],
         orgId: sub,
       })
 
+    const city = 'Rio de Janeiro'
+
     const response = await request(app.server)
-      .get('/pets')
-      .query({ city: 'Rio de Janeiro' })
-      .send()
+      .get(`/pets/search/${city}`)
+      .query({
+        age: 'ADULT',
+      })
+      .send({
+        city,
+      })
 
     expect(response.statusCode).toEqual(200)
-    expect(response.body.pets).toHaveLength(2)
+    expect(response.body.pets).toHaveLength(1)
+    expect(response.body.pets[0]).toEqual(
+      expect.objectContaining({
+        name: 'Pitoco',
+      }),
+    )
   })
 })
