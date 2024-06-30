@@ -10,7 +10,7 @@ import { PetsRepository } from '@/repositories/pets-repositories'
 import { OrgsRepository } from '@/repositories/orgs-repositories'
 import { ResourceNotFoundError } from './errors/resource-not-found-error'
 
-interface CreatePetServiceRequest {
+interface RegisterPetServiceRequest {
   name: string
   description: string
   age: Age
@@ -23,11 +23,11 @@ interface CreatePetServiceRequest {
   orgId: string
 }
 
-interface CreatePetServiceResponse {
+interface RegisterPetServiceResponse {
   pet: Pet
 }
 
-export class CreatePetService {
+export class RegisterPetService {
   constructor(
     private petsRepository: PetsRepository,
     private orgsRepository: OrgsRepository,
@@ -44,7 +44,7 @@ export class CreatePetService {
     images,
     requirement,
     orgId,
-  }: CreatePetServiceRequest): Promise<CreatePetServiceResponse> {
+  }: RegisterPetServiceRequest): Promise<RegisterPetServiceResponse> {
     const org = await this.orgsRepository.findById(orgId)
 
     if (!org) {
