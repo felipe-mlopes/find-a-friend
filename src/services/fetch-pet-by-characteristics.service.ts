@@ -4,16 +4,16 @@ import { PetQuery, PetsRepository } from '@/repositories/pets-repositories'
 import { OrgsRepository } from '@/repositories/orgs-repositories'
 import { ResourceNotFoundError } from './errors/resource-not-found-error'
 
-interface SearchPetsByCharacteristicsServiceRequest {
+interface FetchPetsByCharacteristicsServiceRequest {
   query: PetQuery
   page: number
 }
 
-interface SearchPetsByCharacteristicsServiceResponse {
+interface FetchPetsByCharacteristicsServiceResponse {
   pets: Pet[]
 }
 
-export class SearchPetsByCharacteristicsService {
+export class FetchPetsByCharacteristicsService {
   constructor(
     private petsRepository: PetsRepository,
     private orgsRepository: OrgsRepository,
@@ -22,7 +22,7 @@ export class SearchPetsByCharacteristicsService {
   async execute({
     query,
     page,
-  }: SearchPetsByCharacteristicsServiceRequest): Promise<SearchPetsByCharacteristicsServiceResponse> {
+  }: FetchPetsByCharacteristicsServiceRequest): Promise<FetchPetsByCharacteristicsServiceResponse> {
     const orgs = await this.orgsRepository.findByCity(query.city)
 
     if (orgs.length === 0) {
