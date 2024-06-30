@@ -6,7 +6,7 @@ import { searchCityToCep } from '@/utils/search-city-to-cep'
 import { InvalidCEPError } from './errors/invalid-cep-error'
 import { OrgAlreadyExistsError } from './errors/org-already-exists-error'
 
-interface RegisterOrgServiceRequest {
+interface CreateOrgServiceRequest {
   name: string
   adminName: string
   email: string
@@ -16,11 +16,11 @@ interface RegisterOrgServiceRequest {
   whatsapp: string
 }
 
-interface RegisterOrgServiceResponse {
+interface CreateOrgServiceResponse {
   org: Org
 }
 
-export class RegisterOrgService {
+export class CreateOrgService {
   constructor(private orgsRepository: OrgsRepository) {}
 
   async execute({
@@ -31,7 +31,7 @@ export class RegisterOrgService {
     cep,
     address,
     whatsapp,
-  }: RegisterOrgServiceRequest): Promise<RegisterOrgServiceResponse> {
+  }: CreateOrgServiceRequest): Promise<CreateOrgServiceResponse> {
     const password_hash = await hash(password, 6)
 
     const orgWithSameEmail = await this.orgsRepository.findByEmail(email)
