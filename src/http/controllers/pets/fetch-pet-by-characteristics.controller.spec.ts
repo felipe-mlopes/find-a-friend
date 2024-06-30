@@ -15,19 +15,19 @@ describe('Fetch Pets by Characteristics (e2e)', () => {
   })
 
   it('should be able to fetch pets by characteristics', async () => {
-    const { token } = await createAndAuthenticateOrg(app)
-    const { sub } = token as TokenProps
+    const { access_token } = await createAndAuthenticateOrg(app)
+    const { sub } = access_token as TokenProps
 
     await request(app.server)
       .post('/pets/create')
-      .set('Authorization', `Bearer ${token}`)
+      .set('Authorization', `Bearer ${access_token}`)
       .send({
         name: 'Paçoca',
         description: '',
         age: 'PUPPY',
-        energyLevel: 'FUSSY',
         size: 'MEDIUM',
-        independenceLevel: 'MEDIUM',
+        independence_level: 'MEDIUM',
+        energy_level: 'FUSSY',
         environment: 'NORMAL',
         images: [''],
         requirement: [''],
@@ -36,14 +36,14 @@ describe('Fetch Pets by Characteristics (e2e)', () => {
 
     await request(app.server)
       .post('/pets/create')
-      .set('Authorization', `Bearer ${token}`)
+      .set('Authorization', `Bearer ${access_token}`)
       .send({
         name: 'Pitoco',
         description: '',
         age: 'ADULT',
-        energyLevel: 'PEACEFUL',
         size: 'SMALL',
-        independenceLevel: 'HIGH',
+        independence_level: 'HIGH',
+        energy_level: 'PEACEFUL',
         environment: 'WIDE',
         images: [''],
         requirement: [''],
