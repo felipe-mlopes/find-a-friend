@@ -1,21 +1,49 @@
 import fastify, { FastifyInstance } from 'fastify'
 import fastifyJwt from '@fastify/jwt'
 import fastifyCookie from '@fastify/cookie'
-import fastifySwagger from '@fastify/swagger'
-import fastifySwaggerUi from '@fastify/swagger-ui'
 
 import { ZodError } from 'zod'
 
 import { env } from '@/env'
 import { orgsRoutes } from './http/controllers/orgs/routes'
 import { petsRoutes } from './http/controllers/pets/routes'
-import { swaggerOptions, swaggerUiOptions } from './docs/swagger'
 
 export const app: FastifyInstance = fastify({})
 
 // Swagger Documentation
-app.register(fastifySwagger, swaggerOptions)
-app.register(fastifySwaggerUi, swaggerUiOptions)
+app.register(import('@fastify/swagger'), {
+  openapi: {
+    openapi: '3.0.0',
+    info: {
+      title: 'Documentação da API | Find a Friend',
+      description: 'Testing the Fastify swagger API',
+      version: '1.0.0',
+    },
+    servers: [
+      {
+        url: 'http://localhost:3333',
+        description: 'Development server',
+      },
+    ],
+    components: {
+      securitySchemes: {
+        AccessToken: {
+          type: 'http',
+          scheme: 'bearer',
+          bearerFormat: 'JWT',
+        },
+      },
+    },
+    security: [
+      {
+        AccessToken: [],
+      },
+    ],
+  },
+})
+app.register(import('@fastify/swagger-ui'), {
+  routePrefix: 'api-docs',
+})
 
 // JWT
 app.register(fastifyJwt, {
