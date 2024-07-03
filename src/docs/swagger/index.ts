@@ -1,38 +1,53 @@
-export const swaggerOptions = {
-  swagger: {
-    info: {
-      title: 'Documentação da API | Find a Friend',
-      description: 'My Description.',
-      version: '1.0.0',
-    },
-    servers: [
-      {
-        url: 'http://localhost:3000',
-        description: 'Development server',
-      },
-    ],
-    tags: [
-      { name: 'orgs', description: 'Orgs related end-points' },
-      { name: 'pets', description: 'Pets related end-points' },
-    ],
-    components: {
-      securitySchemes: {
-        apiKey: {
-          type: 'apiKey',
-          name: 'apiKey',
-          in: 'header',
+export const petsSchema = {
+  summary: 'Fetch all available pets',
+  response: {
+    200: {
+      description: 'Pets response',
+      type: 'object',
+      properties: {
+        pets: {
+          type: 'array',
+          items: {
+            type: 'object',
+            properties: {
+              id: { type: 'string' },
+              name: { type: 'string' },
+              description: { type: 'string' },
+              age: { type: 'string' },
+              size: { type: 'string' },
+              energy_level: { type: 'string' },
+              independence_level: { type: 'string' },
+              environment: { type: 'string' },
+              images: { type: 'array' },
+              requirement: { type: 'array' },
+              created_at: { type: 'string' },
+              updated_at: { type: 'string' },
+              org_id: { type: 'string' },
+            },
+            required: [
+              'id',
+              'name',
+              'description',
+              'age',
+              'size',
+              'energy_level',
+              'independence_level',
+              'environment',
+              'created_at',
+              'updated_at',
+              'org_id',
+            ],
+          },
         },
       },
+      required: ['pets'],
     },
   },
+  tags: ['pets'],
 }
 
-export const swaggerUiOptions = {
-  routePrefix: '/docs',
-  exposeRoute: true,
-}
-
-export const petsSchema = {
+export const petsByCharsSchema = {
+  summary: 'Fetch available pets by characteristics',
   response: {
     200: {
       description: 'Pets Response',
@@ -80,6 +95,7 @@ export const petsSchema = {
 }
 
 export const petDetailsSchema = {
+  summary: 'Get a pet details by id',
   response: {
     200: {
       description: 'Pet Details Response',
@@ -124,6 +140,7 @@ export const petDetailsSchema = {
 }
 
 export const petRegistrationSchema = {
+  summary: 'Create a new pet',
   body: {
     type: 'object',
     properties: {
@@ -147,6 +164,12 @@ export const petRegistrationSchema = {
       'environment',
     ],
   },
+  tags: ['pets'],
+  security: [
+    {
+      AccessToken: [],
+    },
+  ],
   response: {
     201: {
       description: 'Pet Registration Response',
@@ -157,10 +180,10 @@ export const petRegistrationSchema = {
       required: ['petId'],
     },
   },
-  tags: ['pets'],
 }
 
 export const orgRegistrationSchema = {
+  summary: 'Register a new org account',
   body: {
     type: 'object',
     properties: {
@@ -196,6 +219,7 @@ export const orgRegistrationSchema = {
 }
 
 export const orgAuthSchema = {
+  summary: 'Authenticate an org account',
   body: {
     type: 'object',
     properties: {
@@ -218,6 +242,7 @@ export const orgAuthSchema = {
 }
 
 export const orgRefreshTokenSchema = {
+  summary: 'Generate a refresh token',
   response: {
     200: {
       description: 'Org Auth Response',
