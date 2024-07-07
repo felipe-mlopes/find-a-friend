@@ -2,15 +2,13 @@ import { FastifyReply, FastifyRequest } from 'fastify'
 import { z } from 'zod'
 
 import { makeCreateOrgService } from '@/services/factories/make-create-org-service'
-import { OrgAlreadyExistsError } from '@/services/errors/org-already-exists-error'
-import { InvalidCEPError } from '@/services/errors/invalid-cep-error'
 
 export async function createOrgController(
   request: FastifyRequest,
   reply: FastifyReply,
 ) {
   const createBodySchema = z.object({
-    name: z.string(),
+    name: z.string().min(4),
     adminName: z.string(),
     email: z.string().email(),
     password: z.string().min(6),
@@ -32,29 +30,17 @@ export async function createOrgController(
   const { name, adminName, email, cep, address, password, whatsapp } =
     createBodySchema.parse(request.body)
 
-  try {
-    const createOrgService = makeCreateOrgService()
+  const createOrgService = makeCreateOrgService()
 
-    await createOrgService.execute({
-      name,
-      adminName,
-      email,
-      cep,
-      address,
-      password,
-      whatsapp,
-    })
-  } catch (err) {
-    if (err instanceof OrgAlreadyExistsError) {
-      return reply.status(409).send({ message: err.message })
-    }
-
-    if (err instanceof InvalidCEPError) {
-      return reply.status(409).send({ message: err.message })
-    }
-
-    throw err
-  }
+  await createOrgService.execute({
+    name,
+    adminName,
+    email,
+    cep,
+    address,
+    password,
+    whatsapp,
+  })
 
   return reply.status(201).send({ message: 'Register was successful.' })
 }
