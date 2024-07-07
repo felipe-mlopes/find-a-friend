@@ -17,7 +17,7 @@ import {
 export async function petsRoutes(app: FastifyInstance) {
   app.get('/pets', { schema: petsSchema }, fetchAllPetsController)
   app.get(
-    '/pets/search/:city',
+    '/pets/:city',
     { schema: petsByCharsSchema },
     fetchPetsByCharacteristicsController,
   )
