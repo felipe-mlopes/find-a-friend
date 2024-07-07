@@ -1,3 +1,303 @@
+const badRequestOrgRegistrationError = {
+  description: 'Bad request error',
+  type: 'object',
+  properties: {
+    message: { type: 'string', example: 'Validation error.' },
+    issues: {
+      type: 'object',
+      properties: {
+        _errors: {
+          type: 'array',
+          items: { type: 'string' },
+        },
+        name: {
+          type: 'object',
+          properties: {
+            _errors: {
+              type: 'array',
+              items: {
+                type: 'string',
+                example: {
+                  _errors: ['Invalid name.'],
+                },
+              },
+            },
+          },
+        },
+        email: {
+          type: 'object',
+          properties: {
+            _errors: {
+              type: 'array',
+              items: {
+                type: 'string',
+                example: {
+                  _errors: ['Invalid email.'],
+                },
+              },
+            },
+          },
+        },
+        cep: {
+          type: 'object',
+          properties: {
+            _errors: {
+              type: 'array',
+              items: {
+                type: 'string',
+                example: {
+                  _errors: ['Invalid CEP.'],
+                },
+              },
+            },
+          },
+        },
+        password: {
+          type: 'object',
+          properties: {
+            _errors: {
+              type: 'array',
+              items: {
+                type: 'string',
+                example: {
+                  _errors: ['Invalid password.'],
+                },
+              },
+            },
+          },
+        },
+      },
+    },
+  },
+  required: ['message', 'issues'],
+}
+
+const badRequestOrgAuthError = {
+  description: 'Bad request error',
+  type: 'object',
+  properties: {
+    message: { type: 'string', example: 'Validation error.' },
+    issues: {
+      type: 'object',
+      properties: {
+        _errors: {
+          type: 'array',
+          items: { type: 'string' },
+        },
+        email: {
+          type: 'object',
+          properties: {
+            _errors: {
+              type: 'array',
+              items: {
+                type: 'string',
+                example: {
+                  _errors: ['Invalid email.'],
+                },
+              },
+            },
+          },
+        },
+        password: {
+          type: 'object',
+          properties: {
+            _errors: {
+              type: 'array',
+              items: {
+                type: 'string',
+                example: {
+                  _errors: ['Invalid password.'],
+                },
+              },
+            },
+          },
+        },
+      },
+    },
+  },
+  required: ['message', 'issues'],
+}
+
+const badRequestPetRegistrationError = {
+  description: 'Bad request error',
+  type: 'object',
+  properties: {
+    message: { type: 'string', example: 'Validation error.' },
+    issues: {
+      type: 'object',
+      properties: {
+        _errors: {
+          type: 'array',
+          items: { type: 'string' },
+        },
+        name: {
+          type: 'object',
+          properties: {
+            _errors: {
+              type: 'array',
+              items: {
+                type: 'string',
+                example: {
+                  _errors: ['Invalid name.'],
+                },
+              },
+            },
+          },
+        },
+        age: {
+          type: 'object',
+          properties: {
+            _errors: {
+              type: 'array',
+              items: {
+                type: 'string',
+                example: {
+                  _errors: [
+                    "Invalid enum value. Expected 'PUPPY' | 'ADULT' | 'SENIOR'",
+                  ],
+                },
+              },
+            },
+          },
+        },
+        size: {
+          type: 'object',
+          properties: {
+            _errors: {
+              type: 'array',
+              items: {
+                type: 'string',
+                example: {
+                  _errors: [
+                    "Invalid enum value. Expected 'SMALL', 'MEDIUM', 'BIG'",
+                  ],
+                },
+              },
+            },
+          },
+        },
+        independence_level: {
+          type: 'object',
+          properties: {
+            _errors: {
+              type: 'array',
+              items: {
+                type: 'string',
+                example: {
+                  _errors: [
+                    "Invalid enum value. Expected 'LOW', 'MEDIUM', 'HIGH'",
+                  ],
+                },
+              },
+            },
+          },
+        },
+        energy_level: {
+          type: 'object',
+          properties: {
+            _errors: {
+              type: 'array',
+              items: {
+                type: 'string',
+                example: {
+                  _errors: [
+                    "Invalid enum value. Expected 'CALM', 'PEACEFUL', 'FUSSY'",
+                  ],
+                },
+              },
+            },
+          },
+        },
+        environment: {
+          type: 'object',
+          properties: {
+            _errors: {
+              type: 'array',
+              items: {
+                type: 'string',
+                example: {
+                  _errors: [
+                    "Invalid enum value. Expected 'TIGHT', 'NORMAL', 'WIDE'",
+                  ],
+                },
+              },
+            },
+          },
+        },
+      },
+    },
+  },
+  required: ['message', 'issues'],
+}
+
+const unauthorizedError = {
+  description: 'Unauthorized error',
+  type: 'object',
+  properties: {
+    message: { type: 'string', example: 'Unauthorized.' },
+  },
+  required: ['message'],
+}
+
+const notFoundError = {
+  description: 'Not found error',
+  type: 'object',
+  properties: {
+    message: { type: 'string', example: 'Not found.' },
+  },
+  required: ['message'],
+}
+
+const conflictError = {
+  description: 'Conflict error',
+  type: 'object',
+  properties: {
+    message: { type: 'string', example: 'Already exists.' },
+  },
+  required: ['message'],
+}
+
+const internalServerError = {
+  description: 'Internal server error',
+  type: 'object',
+  properties: {
+    message: { type: 'string', example: 'Internal server error.' },
+  },
+  required: ['message'],
+}
+
+const petResponse = {
+  type: 'object',
+  properties: {
+    id: { type: 'string' },
+    name: { type: 'string' },
+    description: { type: 'string' },
+    age: { type: 'string', enum: ['PUPPY', 'ADULT', 'SENIOR'] },
+    size: { type: 'string', enum: ['SMALL', 'MEDIUM', 'BIG'] },
+    energy_level: { type: 'string', enum: ['CALM', 'PEACEFUL', 'FUSSY'] },
+    independence_level: { type: 'string', enum: ['LOW', 'MEDIUM', 'HIGH'] },
+    environment: { type: 'string', enum: ['TIGHT', 'NORMAL', 'WIDE'] },
+    images: { type: 'array', items: { type: 'string' } },
+    requirement: { type: 'array', items: { type: 'string' } },
+    created_at: { type: 'string' },
+    updated_at: { type: 'string', nullable: true },
+    org_id: { type: 'string' },
+  },
+  required: [
+    'id',
+    'name',
+    'description',
+    'age',
+    'size',
+    'energy_level',
+    'independence_level',
+    'environment',
+    'created_at',
+    'updated_at',
+    'org_id',
+  ],
+}
+
 export const petsSchema = {
   summary: 'Fetch all available pets',
   response: {
@@ -7,47 +307,26 @@ export const petsSchema = {
       properties: {
         pets: {
           type: 'array',
-          items: {
-            type: 'object',
-            properties: {
-              id: { type: 'string' },
-              name: { type: 'string' },
-              description: { type: 'string' },
-              age: { type: 'string' },
-              size: { type: 'string' },
-              energy_level: { type: 'string' },
-              independence_level: { type: 'string' },
-              environment: { type: 'string' },
-              images: { type: 'array' },
-              requirement: { type: 'array' },
-              created_at: { type: 'string' },
-              updated_at: { type: 'string' },
-              org_id: { type: 'string' },
-            },
-            required: [
-              'id',
-              'name',
-              'description',
-              'age',
-              'size',
-              'energy_level',
-              'independence_level',
-              'environment',
-              'created_at',
-              'updated_at',
-              'org_id',
-            ],
-          },
+          items: petResponse,
         },
       },
       required: ['pets'],
     },
+    500: internalServerError,
   },
   tags: ['pets'],
 }
 
 export const petsByCharsSchema = {
   summary: 'Fetch available pets by characteristics',
+  querystring: {
+    age: { type: 'string', enum: ['PUPPY', 'ADULT', 'SENIOR'] },
+    energy_level: { type: 'string', enum: ['CALM', 'PEACEFUL', 'FUSSY'] },
+    size: { type: 'string', enum: ['SMALL', 'MEDIUM', 'BIG'] },
+    independence_level: { type: 'string', enum: ['LOW', 'MEDIUM', 'HIGH'] },
+    environment: { type: 'string', enum: ['TIGHT', 'NORMAL', 'WIDE'] },
+    page: { type: 'number' },
+  },
   response: {
     200: {
       description: 'Pets Response',
@@ -55,41 +334,13 @@ export const petsByCharsSchema = {
       properties: {
         pets: {
           type: 'array',
-          items: {
-            type: 'object',
-            properties: {
-              id: { type: 'string' },
-              name: { type: 'string' },
-              description: { type: 'string' },
-              age: { type: 'string' },
-              size: { type: 'string' },
-              energy_level: { type: 'string' },
-              independence_level: { type: 'string' },
-              environment: { type: 'string' },
-              images: { type: 'array' },
-              requirement: { type: 'array' },
-              created_at: { type: 'string' },
-              updated_at: { type: 'string' },
-              org_id: { type: 'string' },
-            },
-            required: [
-              'id',
-              'name',
-              'description',
-              'age',
-              'size',
-              'energy_level',
-              'independence_level',
-              'environment',
-              'created_at',
-              'updated_at',
-              'org_id',
-            ],
-          },
+          items: petResponse,
         },
       },
       required: ['pets'],
     },
+    404: notFoundError,
+    500: internalServerError,
   },
   tags: ['pets'],
 }
@@ -98,43 +349,46 @@ export const petDetailsSchema = {
   summary: 'Get a pet details by id',
   response: {
     200: {
-      description: 'Pet Details Response',
+      description: 'Pet details response successfully',
       type: 'object',
       properties: {
-        pet: {
-          type: 'object',
-          properties: {
-            id: { type: 'string' },
-            name: { type: 'string' },
-            description: { type: 'string' },
-            age: { type: 'string' },
-            size: { type: 'string' },
-            energy_level: { type: 'string' },
-            independence_level: { type: 'string' },
-            environment: { type: 'string' },
-            images: { type: 'array' },
-            requirement: { type: 'array' },
-            created_at: { type: 'string' },
-            updated_at: { type: 'string' },
-            org_id: { type: 'string' },
-          },
-          required: [
-            'id',
-            'name',
-            'description',
-            'age',
-            'size',
-            'energy_level',
-            'independence_level',
-            'environment',
-            'created_at',
-            'updated_at',
-            'org_id',
-          ],
-        },
+        pet: petResponse,
       },
       required: ['pet'],
     },
+    400: {
+      description: 'Bad request error',
+      type: 'object',
+      properties: {
+        message: { type: 'string', example: 'Validation error.' },
+        issues: {
+          type: 'object',
+          properties: {
+            _errors: {
+              type: 'array',
+              items: { type: 'string' },
+            },
+            id: {
+              type: 'object',
+              properties: {
+                _errors: {
+                  type: 'array',
+                  items: {
+                    type: 'string',
+                    example: {
+                      _errors: ['Invalid id.'],
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
+      required: ['message', 'issues'],
+    },
+    404: notFoundError,
+    500: internalServerError,
   },
   tags: ['pets'],
 }
@@ -146,11 +400,11 @@ export const petRegistrationSchema = {
     properties: {
       name: { type: 'string' },
       description: { type: 'string' },
-      age: { type: 'string' },
-      size: { type: 'string' },
-      independence_level: { type: 'string' },
-      energy_level: { type: 'string' },
-      environment: { type: 'string' },
+      age: { type: 'string', enum: ['PUPPY', 'ADULT', 'SENIOR'] },
+      size: { type: 'string', enum: ['SMALL', 'MEDIUM', 'BIG'] },
+      energy_level: { type: 'string', enum: ['CALM', 'PEACEFUL', 'FUSSY'] },
+      independence_level: { type: 'string', enum: ['LOW', 'MEDIUM', 'HIGH'] },
+      environment: { type: 'string', enum: ['TIGHT', 'NORMAL', 'WIDE'] },
       images: { type: 'array', items: { type: 'string' } },
       requirement: { type: 'array', items: { type: 'string' } },
     },
@@ -172,12 +426,21 @@ export const petRegistrationSchema = {
   ],
   response: {
     201: {
-      description: 'Pet Registration Response',
+      description: 'Pet registration response successfully',
       type: 'object',
       properties: {
         petId: { type: 'string' },
       },
       required: ['petId'],
+    },
+    400: badRequestPetRegistrationError,
+    401: {
+      description: 'Pet registration response without authentication',
+      type: 'object',
+      properties: {
+        message: { type: 'string', example: 'Unauthorized.' },
+      },
+      required: ['message'],
     },
   },
 }
@@ -214,6 +477,9 @@ export const orgRegistrationSchema = {
       },
       required: ['message'],
     },
+    400: badRequestOrgRegistrationError,
+    409: conflictError,
+    500: internalServerError,
   },
   tags: ['orgs'],
 }
@@ -230,13 +496,16 @@ export const orgAuthSchema = {
   },
   response: {
     200: {
-      description: 'Org Auth Response',
+      description: 'Org auth response ok',
       type: 'object',
       properties: {
         access_token: { type: 'string' },
       },
       required: ['access_token'],
     },
+    400: badRequestOrgAuthError,
+    401: unauthorizedError,
+    500: internalServerError,
   },
   tags: ['orgs'],
 }
@@ -252,6 +521,7 @@ export const orgRefreshTokenSchema = {
       },
       required: ['refresh_token'],
     },
+    500: internalServerError,
   },
   tags: ['orgs'],
 }
