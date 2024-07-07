@@ -53,7 +53,7 @@ describe('Fetch Pets by Characteristics (e2e)', () => {
     const city = 'Rio de Janeiro'
 
     const response = await request(app.server)
-      .get(`/pets/search/${city}`)
+      .get(`/pets/${city}`)
       .query({
         age: 'ADULT',
       })

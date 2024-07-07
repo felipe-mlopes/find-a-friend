@@ -8,7 +8,7 @@ export async function registerPetController(
   reply: FastifyReply,
 ) {
   const registerPetBodySchema = z.object({
-    name: z.string(),
+    name: z.string().min(3),
     description: z.string(),
     age: z.enum(['PUPPY', 'ADULT', 'SENIOR']),
     size: z.enum(['SMALL', 'MEDIUM', 'BIG']),
