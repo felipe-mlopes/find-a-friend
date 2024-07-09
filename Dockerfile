@@ -21,4 +21,4 @@ COPY --from=build /usr/src/app/package.json ./package.json
 
 EXPOSE 3333
 
-CMD ["npm", "run", "start:prod"]
+CMD ["npm", "run", "start"]
