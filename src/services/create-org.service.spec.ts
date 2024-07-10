@@ -16,7 +16,7 @@ describe('Create Org Service', () => {
   })
 
   it('should be able to create an org', async () => {
-    const { org } = await sut.execute({
+    await sut.execute({
       name: 'Org',
       adminName: 'John Doe',
       email: 'org@example.com',
@@ -25,12 +25,14 @@ describe('Create Org Service', () => {
       address: 'Example St',
       whatsapp: '21912345678',
     })
+
+    const org = orgsRepository.items[0]
 
     expect(org.id).toEqual(expect.any(String))
   })
 
   it('should hash org password upon registration', async () => {
-    const { org } = await sut.execute({
+    await sut.execute({
       name: 'Org',
       adminName: 'John Doe',
       email: 'org@example.com',
@@ -39,6 +41,8 @@ describe('Create Org Service', () => {
       address: 'Example St',
       whatsapp: '21912345678',
     })
+
+    const org = orgsRepository.items[0]
 
     const isPasswordCorrectlyHashed = await compare('123456', org.password_hash)
 
