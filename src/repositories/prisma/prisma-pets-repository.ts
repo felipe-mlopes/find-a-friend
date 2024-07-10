@@ -20,14 +20,6 @@ interface SearchPetProps {
 }
 
 export class PrismaPetsRepository implements PetsRepository {
-  async create(data: Prisma.PetUncheckedCreateInput) {
-    const pet = await prisma.pet.create({
-      data,
-    })
-
-    return pet
-  }
-
   async findAll(page: number) {
     const pets = await prisma.pet.findMany({
       take: 9,
@@ -91,5 +83,28 @@ export class PrismaPetsRepository implements PetsRepository {
     })
 
     return pets
+  }
+
+  async create(data: Prisma.PetUncheckedCreateInput) {
+    await prisma.pet.create({
+      data,
+    })
+  }
+
+  async save(data: Prisma.PetUncheckedCreateInput) {
+    await prisma.pet.update({
+      where: {
+        id: data.id,
+      },
+      data,
+    })
+  }
+
+  async delete(id: string) {
+    await prisma.pet.delete({
+      where: {
+        id,
+      },
+    })
   }
 }

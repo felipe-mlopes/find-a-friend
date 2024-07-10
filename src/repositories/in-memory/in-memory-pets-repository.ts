@@ -1,32 +1,40 @@
-import { Org, Pet, Prisma } from '@prisma/client'
 import { randomUUID } from 'node:crypto'
+import { $Enums } from '@prisma/client'
 
 import { PetQuery, PetsRepository } from '../pets-repositories'
 
+interface Pet {
+  id: string
+  name: string
+  description: string
+  age: $Enums.Age
+  size: $Enums.Size
+  energy_level: $Enums.EnergyLevel
+  independence_level: $Enums.IndependenceLevel
+  environment: $Enums.Environment
+  images: string[]
+  requirement: string[]
+  created_at: Date
+  updated_at: Date | null
+  org_id: string
+}
+
+interface Org {
+  id: string
+  name: string
+  admin_name: string
+  email: string
+  password_hash: string
+  role: $Enums.Role
+  cep: string
+  address: string
+  city: string
+  whatsapp: string
+  created_at: Date
+}
+
 export class InMemoryPetsRepository implements PetsRepository {
   public items: Pet[] = []
-
-  async create(data: Prisma.PetUncheckedCreateInput) {
-    const pet = {
-      id: randomUUID(),
-      name: data.name,
-      description: data.description,
-      age: data.age,
-      size: data.size,
-      energy_level: data.energy_level,
-      independence_level: data.independence_level,
-      environment: data.environment,
-      images: [],
-      requirement: [],
-      created_at: new Date(),
-      updated_at: new Date(),
-      org_id: data.org_id,
-    }
-
-    this.items.push(pet)
-
-    return pet
-  }
 
   async findAll(page: number) {
     const pets = this.items.slice((page - 1) * 9, page * 9)
@@ -87,5 +95,38 @@ export class InMemoryPetsRepository implements PetsRepository {
     }
 
     return petsFiltered
+  }
+
+  async create(data: Pet) {
+    const pet = {
+      id: randomUUID(),
+      name: data.name,
+      description: data.description,
+      age: data.age,
+      size: data.size,
+      energy_level: data.energy_level,
+      independence_level: data.independence_level,
+      environment: data.environment,
+      images: [],
+      requirement: [],
+      created_at: new Date(),
+      updated_at: null,
+      org_id: data.org_id,
+    }
+
+    this.items.push(pet)
+  }
+
+  async save(data: Pet) {
+    const itemIndex = this.items.findIndex((item) => item.id === data.id)
+
+    this.items[itemIndex] = {
+      ...data,
+      updated_at: new Date(),
+    }
+  }
+
+  async delete(id: string) {
+    this.items = this.items.filter((item) => item.id !== id)
   }
 }

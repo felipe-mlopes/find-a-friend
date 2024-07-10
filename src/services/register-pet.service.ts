@@ -3,11 +3,12 @@ import {
   EnergyLevel,
   Environment,
   IndependenceLevel,
-  Pet,
   Size,
 } from '@prisma/client'
+
 import { PetsRepository } from '@/repositories/pets-repositories'
 import { OrgsRepository } from '@/repositories/orgs-repositories'
+
 import { ResourceNotFoundError } from './errors/resource-not-found-error'
 
 interface RegisterPetServiceRequest {
@@ -24,7 +25,7 @@ interface RegisterPetServiceRequest {
 }
 
 interface RegisterPetServiceResponse {
-  pet: Pet
+  message: string
 }
 
 export class RegisterPetService {
@@ -51,7 +52,7 @@ export class RegisterPetService {
       throw new ResourceNotFoundError()
     }
 
-    const pet = await this.petsRepository.create({
+    await this.petsRepository.create({
       name,
       description,
       age,
@@ -67,7 +68,7 @@ export class RegisterPetService {
     })
 
     return {
-      pet,
+      message: 'Pet was created successfully.',
     }
   }
 }

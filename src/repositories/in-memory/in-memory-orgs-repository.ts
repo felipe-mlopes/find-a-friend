@@ -1,30 +1,24 @@
 import { randomUUID } from 'node:crypto'
-import { Org, Prisma } from '@prisma/client'
+import { $Enums } from '@prisma/client'
 
 import { OrgsRepository } from '../orgs-repositories'
 
+interface Org {
+  id: string
+  name: string
+  admin_name: string
+  email: string
+  password_hash: string
+  role: $Enums.Role
+  cep: string
+  address: string
+  city: string
+  whatsapp: string
+  created_at: Date
+}
+
 export class InMemoryOrgsRepository implements OrgsRepository {
   public items: Org[] = []
-
-  async create(data: Prisma.OrgCreateInput) {
-    const org = {
-      id: randomUUID(),
-      name: data.name,
-      admin_name: data.admin_name,
-      email: data.email,
-      password_hash: data.password_hash,
-      role: data.role ?? 'ADMIN',
-      cep: data.cep,
-      city: data.city,
-      address: data.address,
-      whatsapp: data.whatsapp,
-      created_at: new Date(),
-    }
-
-    this.items.push(org)
-
-    return org
-  }
 
   async findById(id: string) {
     const org = this.items.find((item) => item.id === id)
@@ -56,5 +50,23 @@ export class InMemoryOrgsRepository implements OrgsRepository {
     return this.items.filter(
       (item) => item.city.toLocaleLowerCase() === city.toLocaleLowerCase(),
     )
+  }
+
+  async create(data: Org) {
+    const org = {
+      id: randomUUID(),
+      name: data.name,
+      admin_name: data.admin_name,
+      email: data.email,
+      password_hash: data.password_hash,
+      role: data.role ?? 'ADMIN',
+      cep: data.cep,
+      city: data.city,
+      address: data.address,
+      whatsapp: data.whatsapp,
+      created_at: new Date(),
+    }
+
+    this.items.push(org)
   }
 }

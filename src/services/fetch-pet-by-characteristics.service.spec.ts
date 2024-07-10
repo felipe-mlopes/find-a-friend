@@ -1,8 +1,11 @@
+import { randomUUID } from 'node:crypto'
 import { describe, beforeEach, it, expect } from 'vitest'
+
+import { FetchPetsByCharacteristicsService } from './fetch-pet-by-characteristics.service'
 
 import { InMemoryPetsRepository } from '@/repositories/in-memory/in-memory-pets-repository'
 import { InMemoryOrgsRepository } from '@/repositories/in-memory/in-memory-orgs-repository'
-import { FetchPetsByCharacteristicsService } from './fetch-pet-by-characteristics.service'
+
 import { ResourceNotFoundError } from './errors/resource-not-found-error'
 
 let petsRepository: InMemoryPetsRepository
@@ -19,19 +22,24 @@ describe('Fetch Pets By Characteristics Service', () => {
   it('should be able to fecth pets by one characteristic', async () => {
     const city = 'Rio de Janeiro'
 
-    const org = await orgsRepository.create({
-      id: 'org-01',
+    await orgsRepository.create({
+      id: randomUUID(),
       name: 'Org',
       admin_name: 'John Doe',
       email: 'org@example.com',
       password_hash: '123456',
+      role: 'USER',
+      address: 'Example St',
       cep: '21220000',
       city,
-      address: 'Example St',
       whatsapp: '21912345678',
+      created_at: new Date(),
     })
 
+    const org = orgsRepository.items[0]
+
     await petsRepository.create({
+      id: randomUUID(),
       name: 'Paçoca',
       description: 'Cachorro sapeca que gosta de brincar.',
       age: 'ADULT',
@@ -41,11 +49,13 @@ describe('Fetch Pets By Characteristics Service', () => {
       environment: 'NORMAL',
       images: [''],
       requirement: [''],
-      updated_at: new Date(),
+      created_at: new Date(),
+      updated_at: null,
       org_id: org.id,
     })
 
     await petsRepository.create({
+      id: randomUUID(),
       name: 'Will',
       description: 'Cachorro sapeca que gosta de brincar.',
       age: 'ADULT',
@@ -55,7 +65,8 @@ describe('Fetch Pets By Characteristics Service', () => {
       environment: 'TIGHT',
       images: [''],
       requirement: [''],
-      updated_at: new Date(),
+      created_at: new Date(),
+      updated_at: null,
       org_id: org.id,
     })
 
@@ -81,19 +92,24 @@ describe('Fetch Pets By Characteristics Service', () => {
   it('should be able to fetch pets by all characteristics', async () => {
     const city = 'Rio de Janeiro'
 
-    const org = await orgsRepository.create({
-      id: 'org-01',
+    await orgsRepository.create({
+      id: randomUUID(),
       name: 'Org',
       admin_name: 'John Doe',
       email: 'org@example.com',
       password_hash: '123456',
+      role: 'USER',
+      address: 'Example St',
       cep: '21220000',
       city,
-      address: 'Example St',
       whatsapp: '21912345678',
+      created_at: new Date(),
     })
 
+    const org = orgsRepository.items[0]
+
     await petsRepository.create({
+      id: randomUUID(),
       name: 'Paçoca',
       description: 'Cachorro sapeca que gosta de brincar.',
       age: 'ADULT',
@@ -103,11 +119,13 @@ describe('Fetch Pets By Characteristics Service', () => {
       environment: 'NORMAL',
       images: [''],
       requirement: [''],
-      updated_at: new Date(),
+      created_at: new Date(),
+      updated_at: null,
       org_id: org.id,
     })
 
     await petsRepository.create({
+      id: randomUUID(),
       name: 'Will',
       description: 'Cachorro sapeca que gosta de brincar.',
       age: 'ADULT',
@@ -117,7 +135,8 @@ describe('Fetch Pets By Characteristics Service', () => {
       environment: 'TIGHT',
       images: [''],
       requirement: [''],
-      updated_at: new Date(),
+      created_at: new Date(),
+      updated_at: null,
       org_id: org.id,
     })
 
@@ -138,19 +157,23 @@ describe('Fetch Pets By Characteristics Service', () => {
   })
 
   it('should not be able to fetch for pets in the non-existent city', async () => {
-    const org = await orgsRepository.create({
-      id: 'org-01',
+    await orgsRepository.create({
+      id: randomUUID(),
       name: 'Org',
       admin_name: 'John Doe',
       email: 'org@example.com',
       password_hash: '123456',
+      role: 'USER',
+      address: 'Example St',
       cep: '21220000',
       city: 'Rio de Janeiro',
-      address: 'Example St',
       whatsapp: '21912345678',
+      created_at: new Date(),
     })
+    const org = orgsRepository.items[0]
 
     await petsRepository.create({
+      id: randomUUID(),
       name: 'Paçoca',
       description: 'Cachorro sapeca que gosta de brincar.',
       age: 'ADULT',
@@ -160,7 +183,8 @@ describe('Fetch Pets By Characteristics Service', () => {
       environment: 'NORMAL',
       images: [''],
       requirement: [''],
-      updated_at: new Date(),
+      created_at: new Date(),
+      updated_at: null,
       org_id: org.id,
     })
 
@@ -182,20 +206,25 @@ describe('Fetch Pets By Characteristics Service', () => {
   it('should be able to fetch paginated pets by characteristics', async () => {
     const city = 'Rio de Janeiro'
 
-    const org = await orgsRepository.create({
-      id: 'org-01',
+    await orgsRepository.create({
+      id: randomUUID(),
       name: 'Org',
       admin_name: 'John Doe',
       email: 'org@example.com',
       password_hash: '123456',
+      role: 'USER',
+      address: 'Example St',
       cep: '21220000',
       city,
-      address: 'Example St',
       whatsapp: '21912345678',
+      created_at: new Date(),
     })
+
+    const org = orgsRepository.items[0]
 
     for (let i = 1; i <= 11; i++) {
       await petsRepository.create({
+        id: randomUUID(),
         name: `Paçoca ${i}`,
         description: 'Cachorro sapeca que gosta de brincar.',
         age: 'ADULT',
@@ -205,7 +234,8 @@ describe('Fetch Pets By Characteristics Service', () => {
         environment: 'NORMAL',
         images: [''],
         requirement: [''],
-        updated_at: new Date(),
+        created_at: new Date(),
+        updated_at: null,
         org_id: org.id,
       })
     }
