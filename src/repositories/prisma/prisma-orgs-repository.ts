@@ -4,14 +4,6 @@ import { OrgsRepository } from '../orgs-repositories'
 import { prisma } from '@/lib/prisma'
 
 export class PrismaOrgsRepository implements OrgsRepository {
-  async create(data: Prisma.OrgCreateInput) {
-    const org = await prisma.org.create({
-      data,
-    })
-
-    return org
-  }
-
   async findById(id: string) {
     const org = await prisma.org.findFirst({
       where: {
@@ -61,5 +53,11 @@ export class PrismaOrgsRepository implements OrgsRepository {
     })
 
     return orgs
+  }
+
+  async create(data: Prisma.OrgCreateInput) {
+    await prisma.org.create({
+      data,
+    })
   }
 }

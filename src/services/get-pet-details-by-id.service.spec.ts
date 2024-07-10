@@ -14,7 +14,7 @@ describe('Get Pet Details By Id Service', () => {
   })
 
   it('should be able to get pet details by id', async () => {
-    const specificPet = await petsRepository.create({
+    await petsRepository.create({
       id: 'pet-01',
       name: 'Paçoca',
       description: 'Cachorro muito sapeca.',
@@ -26,8 +26,11 @@ describe('Get Pet Details By Id Service', () => {
       images: [''],
       requirement: [''],
       org_id: 'org-id',
-      updated_at: new Date(),
+      created_at: new Date(),
+      updated_at: null,
     })
+
+    const specificPet = petsRepository.items[0]
 
     const { pet } = await sut.execute({
       petId: specificPet.id,

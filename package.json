@@ -14,7 +14,8 @@
     "pretest:e2e": "run-s test:create-prisma-environment test:install-prisma-environment",
     "test:e2e": "vitest run --dir src/http",
     "test:coverage": "vitest run --coverage",
-    "test:ui": "vitest --ui"
+    "test:ui": "vitest --ui",
+    "prisma:generate": "prisma generate"
   },
   "keywords": [],
   "author": "",

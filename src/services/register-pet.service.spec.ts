@@ -1,8 +1,12 @@
 import { describe, beforeEach, it, expect } from 'vitest'
+import { randomUUID } from 'crypto'
+
+import { RegisterPetService } from './register-pet.service'
 
 import { InMemoryPetsRepository } from '@/repositories/in-memory/in-memory-pets-repository'
 import { InMemoryOrgsRepository } from '@/repositories/in-memory/in-memory-orgs-repository'
-import { RegisterPetService } from './register-pet.service'
+
+import { ResourceNotFoundError } from './errors/resource-not-found-error'
 
 let petsRepository: InMemoryPetsRepository
 let orgsRepository: InMemoryOrgsRepository
@@ -16,19 +20,23 @@ describe('Pet Register Service', () => {
   })
 
   it('should be to able register a pet', async () => {
-    const { id } = await orgsRepository.create({
-      id: 'org-01',
+    await orgsRepository.create({
+      id: randomUUID(),
       name: 'Org',
       admin_name: 'John Doe',
       email: 'org@example.com',
       password_hash: '123456',
+      role: 'USER',
+      address: 'Example St',
       cep: '21220000',
       city: 'Rio de Janeiro',
-      address: 'Example St',
       whatsapp: '21912345678',
+      created_at: new Date(),
     })
 
-    const { pet } = await sut.execute({
+    const org = orgsRepository.items[0]
+
+    await sut.execute({
       name: 'Paçoca',
       description: 'bla bla',
       age: 'PUPPY',
@@ -38,9 +46,28 @@ describe('Pet Register Service', () => {
       environment: 'NORMAL',
       images: [''],
       requirement: [''],
-      orgId: id,
+      orgId: org.id,
     })
 
+    const pet = petsRepository.items[0]
+
     expect(pet.id).toEqual(expect.any(String))
+  })
+
+  it('should not be to able register a pet without a registered org', async () => {
+    await expect(() =>
+      sut.execute({
+        name: 'Paçoca',
+        description: 'bla bla',
+        age: 'PUPPY',
+        size: 'MEDIUM',
+        independence_level: 'MEDIUM',
+        energy_level: 'FUSSY',
+        environment: 'NORMAL',
+        images: [''],
+        requirement: [''],
+        orgId: randomUUID(),
+      }),
+    ).rejects.toBeInstanceOf(ResourceNotFoundError)
   })
 })

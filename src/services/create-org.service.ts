@@ -1,8 +1,8 @@
-import { Org } from '@prisma/client'
 import { hash } from 'bcrypt'
 
 import { OrgsRepository } from '@/repositories/orgs-repositories'
 import { searchCityToCep } from '@/utils/search-city-to-cep'
+
 import { InvalidCEPError } from './errors/invalid-cep-error'
 import { OrgAlreadyExistsError } from './errors/org-already-exists-error'
 
@@ -17,7 +17,7 @@ interface CreateOrgServiceRequest {
 }
 
 interface CreateOrgServiceResponse {
-  org: Org
+  message: string
 }
 
 export class CreateOrgService {
@@ -46,7 +46,7 @@ export class CreateOrgService {
       throw new InvalidCEPError()
     }
 
-    const org = await this.orgsRepository.create({
+    await this.orgsRepository.create({
       name,
       admin_name: adminName,
       email,
@@ -58,7 +58,7 @@ export class CreateOrgService {
     })
 
     return {
-      org,
+      message: 'Org was created successfully.',
     }
   }
 }
