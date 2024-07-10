@@ -2,6 +2,7 @@ import { describe, beforeEach, it, expect } from 'vitest'
 
 import { InMemoryPetsRepository } from '@/repositories/in-memory/in-memory-pets-repository'
 import { FetchAllPetsService } from './fetch-all-pets.service'
+import { randomUUID } from 'node:crypto'
 
 let petsRepository: InMemoryPetsRepository
 let sut: FetchAllPetsService
@@ -14,6 +15,7 @@ describe('Fetch Pet By City Service', () => {
 
   it('should be to able fetch all pets', async () => {
     await petsRepository.create({
+      id: randomUUID(),
       name: 'Paçoca',
       description: 'Cachorro sapeca que gosta de brincar.',
       age: 'ADULT',
@@ -23,11 +25,13 @@ describe('Fetch Pet By City Service', () => {
       environment: 'NORMAL',
       images: [''],
       requirement: [''],
-      updated_at: new Date(),
+      created_at: new Date(),
+      updated_at: null,
       org_id: 'adafwf4sf12sf1s4fswasf',
     })
 
     await petsRepository.create({
+      id: randomUUID(),
       name: 'Will',
       description: 'Cachorro sapeca que gosta de brincar.',
       age: 'ADULT',
@@ -37,7 +41,8 @@ describe('Fetch Pet By City Service', () => {
       environment: 'TIGHT',
       images: [''],
       requirement: [''],
-      updated_at: new Date(),
+      created_at: new Date(),
+      updated_at: null,
       org_id: 'adafwf4sf12sf1s4fswasf',
     })
 
@@ -51,6 +56,7 @@ describe('Fetch Pet By City Service', () => {
   it('should be able to fetch paginated pets search', async () => {
     for (let i = 1; i <= 11; i++) {
       await petsRepository.create({
+        id: randomUUID(),
         name: `Paçoca ${i}`,
         description: 'Cachorro sapeca que gosta de brincar.',
         age: 'ADULT',
@@ -60,7 +66,8 @@ describe('Fetch Pet By City Service', () => {
         environment: 'NORMAL',
         images: [''],
         requirement: [''],
-        updated_at: new Date(),
+        created_at: new Date(),
+        updated_at: null,
         org_id: 'adafwf4sf12sf1s4fswasf',
       })
     }
