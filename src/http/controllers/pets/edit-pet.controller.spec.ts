@@ -3,9 +3,14 @@ import request from 'supertest'
 
 import { app } from '@/app'
 import { createAndAuthenticateOrg } from '@/utils/test/create-and-authenticate-org'
-import { TokenProps } from '@/@types/test/token'
 
-describe('Get Pet Details (e2e)', () => {
+interface TokenProps {
+  sub: string
+  iat: number
+  exp: number
+}
+
+describe('', () => {
   beforeAll(async () => {
     await app.ready()
   })
@@ -14,9 +19,9 @@ describe('Get Pet Details (e2e)', () => {
     await app.close()
   })
 
-  test('[GET] /pets/pet/:petId', async () => {
+  test('[PUT] /pets/pet/:id', async () => {
     const { access_token } = await createAndAuthenticateOrg(app)
-    const { sub } = access_token as TokenProps
+    const { sub } = app.jwt.decode(access_token) as TokenProps
 
     await request(app.server)
       .post('/pets/create')
@@ -40,9 +45,18 @@ describe('Get Pet Details (e2e)', () => {
 
     const petId = pets[0].id
 
-    const response = await request(app.server).get(`/pets/pet/${petId}`).send()
+    const data = {
+      ...pets,
+      age: 'ADULT',
+    }
 
-    expect(response.statusCode).toEqual(200)
-    expect(response.body.pet.name).toEqual('Paçoca')
+    const response = await request(app.server)
+      .put(`/pets/pet/${petId}`)
+      .set('Authorization', `Bearer ${access_token}`)
+      .send({
+        data,
+      })
+
+    expect(response.statusCode).toEqual(204)
   })
 })

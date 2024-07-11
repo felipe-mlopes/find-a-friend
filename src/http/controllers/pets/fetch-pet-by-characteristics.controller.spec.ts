@@ -1,4 +1,4 @@
-import { afterAll, beforeAll, describe, expect, it } from 'vitest'
+import { afterAll, beforeAll, describe, expect, test } from 'vitest'
 import request from 'supertest'
 
 import { app } from '@/app'
@@ -14,7 +14,7 @@ describe('Fetch Pets by Characteristics (e2e)', () => {
     await app.close()
   })
 
-  it('should be able to fetch pets by characteristics', async () => {
+  test('[GET] /pets/:city', async () => {
     const { access_token } = await createAndAuthenticateOrg(app)
     const { sub } = access_token as TokenProps
 

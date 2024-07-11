@@ -4,6 +4,8 @@ import { fetchAllPetsController } from './fetch-all-pets.controller'
 import { fetchPetsByCharacteristicsController } from './fetch-pet-by-characteristics.controller'
 import { getPetDetailsByIdController } from './get-pet-details-by-id.controller'
 import { registerPetController } from './register-pet.controller'
+import { deletePetController } from './delete-pet.controller'
+import { editPetController } from './edit-pet.controller'
 
 import { verifyJWT } from '@/http/middlewares/verify-jwt'
 
@@ -35,4 +37,14 @@ export async function petsRoutes(app: FastifyInstance) {
     },
     registerPetController,
   )
+
+  app.put(
+    '/pets/pet/:id',
+    {
+      onRequest: [verifyJWT],
+    },
+    editPetController,
+  )
+
+  app.delete('/pets/pet/:id', { onRequest: [verifyJWT] }, deletePetController)
 }

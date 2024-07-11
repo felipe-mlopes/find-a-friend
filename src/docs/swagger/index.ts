@@ -429,9 +429,9 @@ export const petRegistrationSchema = {
       description: 'Pet registration response successfully',
       type: 'object',
       properties: {
-        petId: { type: 'string' },
+        message: { type: 'string' },
       },
-      required: ['petId'],
+      required: ['message'],
     },
     400: badRequestPetRegistrationError,
     401: {
