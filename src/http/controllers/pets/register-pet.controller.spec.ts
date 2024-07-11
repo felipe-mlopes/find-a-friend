@@ -1,4 +1,4 @@
-import { afterAll, beforeAll, describe, expect, it } from 'vitest'
+import { afterAll, beforeAll, describe, expect, test } from 'vitest'
 import request from 'supertest'
 
 import { app } from '@/app'
@@ -19,7 +19,7 @@ describe('Create a Pet Registry (e2e)', () => {
     await app.close()
   })
 
-  it('should be able to create a pet registry', async () => {
+  test('[POST] /pets/create', async () => {
     const { access_token } = await createAndAuthenticateOrg(app)
 
     const { sub } = app.jwt.decode(access_token) as TokenProps
