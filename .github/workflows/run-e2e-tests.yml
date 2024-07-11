@@ -32,4 +32,4 @@ jobs:
       - run: npm run test:e2e
         env:
           JWT_SECRET_TEST: ${{ secrets.JWT_SECRET_TEST }}
-          DATABASE_TEST_URL: ${{ secrets.DATABASE_TEST_URL }}
+          DATABASE_URL: "postgresql://docker:docker@localhost:5432/find-a-friend?schema=public"
