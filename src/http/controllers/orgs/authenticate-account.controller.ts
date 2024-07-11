@@ -1,7 +1,7 @@
 import { FastifyReply, FastifyRequest } from 'fastify'
 import { z } from 'zod'
 
-import { makeAuthenticateService } from '@/services/factories/make-authenticate-service'
+import { makeAuthenticateService } from '@/services/factories/make-authenticate.service'
 
 export async function authenticateAccountController(
   request: FastifyRequest,
