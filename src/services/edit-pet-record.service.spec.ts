@@ -55,8 +55,6 @@ describe('Delete Pet Record Service', () => {
 
     const pet = petsRepository.items[0]
 
-    console.log(pet)
-
     const result = await sut.execute({
       id: pet.id,
       data: {
@@ -65,8 +63,6 @@ describe('Delete Pet Record Service', () => {
       },
       orgId: org.id,
     })
-
-    console.log(pet)
 
     expect(result.message).toEqual(expect.any(String))
   })
