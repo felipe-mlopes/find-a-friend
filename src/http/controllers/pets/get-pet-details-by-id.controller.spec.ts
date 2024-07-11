@@ -1,4 +1,4 @@
-import { afterAll, beforeAll, describe, expect, it } from 'vitest'
+import { afterAll, beforeAll, describe, expect, test } from 'vitest'
 import request from 'supertest'
 
 import { app } from '@/app'
@@ -14,11 +14,11 @@ describe('Get Pet Details (e2e)', () => {
     await app.close()
   })
 
-  it('should be able to get a specific pet details', async () => {
+  test('[GET] /pets/pet/:petId', async () => {
     const { access_token } = await createAndAuthenticateOrg(app)
     const { sub } = access_token as TokenProps
 
-    const newPet = await request(app.server)
+    await request(app.server)
       .post('/pets/create')
       .set('Authorization', `Bearer ${access_token}`)
       .send({
@@ -34,7 +34,11 @@ describe('Get Pet Details (e2e)', () => {
         orgId: sub,
       })
 
-    const { petId } = newPet.body
+    const petRecords = await request(app.server).get('/pets').send()
+
+    const { pets } = petRecords.body
+
+    const petId = pets[0].id
 
     const response = await request(app.server).get(`/pets/pet/${petId}`).send()
 
