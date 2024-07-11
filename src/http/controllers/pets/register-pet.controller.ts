@@ -1,7 +1,7 @@
 import { FastifyReply, FastifyRequest } from 'fastify'
 import { z } from 'zod'
 
-import { makeRegisterPetService } from '@/services/factories/make-register-pet-service'
+import { makeRegisterPetService } from '@/services/factories/make-register-pet.service'
 
 export async function registerPetController(
   request: FastifyRequest,
@@ -35,7 +35,7 @@ export async function registerPetController(
 
   const registerPetService = makeRegisterPetService()
 
-  const newPet = await registerPetService.execute({
+  const message = await registerPetService.execute({
     name,
     description,
     age,
@@ -48,5 +48,5 @@ export async function registerPetController(
     orgId,
   })
 
-  return reply.status(201).send({ petId: newPet.pet.id })
+  return reply.status(201).send({ message })
 }
