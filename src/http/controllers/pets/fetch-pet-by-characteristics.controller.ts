@@ -1,7 +1,7 @@
 import { FastifyReply, FastifyRequest } from 'fastify'
 import { z } from 'zod'
 
-import { makeFetchPetsByCharacteristicsService } from '@/services/factories/make-fetch-pets-by-characteristics-service'
+import { makeFetchPetsByCharacteristicsService } from '@/services/factories/make-fetch-pets-by-characteristics.service'
 
 export async function fetchPetsByCharacteristicsController(
   request: FastifyRequest,
