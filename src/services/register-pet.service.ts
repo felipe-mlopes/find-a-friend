@@ -1,10 +1,4 @@
-import {
-  Age,
-  EnergyLevel,
-  Environment,
-  IndependenceLevel,
-  Size,
-} from '@prisma/client'
+import { $Enums } from '@prisma/client'
 
 import { PetsRepository } from '@/repositories/pets-repositories'
 import { OrgsRepository } from '@/repositories/orgs-repositories'
@@ -14,11 +8,11 @@ import { ResourceNotFoundError } from './errors/resource-not-found-error'
 interface RegisterPetServiceRequest {
   name: string
   description: string
-  age: Age
-  size: Size
-  independence_level: IndependenceLevel
-  energy_level: EnergyLevel
-  environment: Environment
+  age: $Enums.Age
+  size: $Enums.Size
+  independence_level: $Enums.IndependenceLevel
+  energy_level: $Enums.EnergyLevel
+  environment: $Enums.Environment
   images: string[]
   requirement: string[]
   orgId: string
