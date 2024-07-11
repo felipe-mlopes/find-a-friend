@@ -1,7 +1,7 @@
 import { FastifyReply, FastifyRequest } from 'fastify'
 import { z } from 'zod'
 
-import { makeCreateOrgService } from '@/services/factories/make-create-org-service'
+import { makeCreateOrgService } from '@/services/factories/make-create-org.service'
 
 export async function createOrgController(
   request: FastifyRequest,
