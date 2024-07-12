@@ -470,12 +470,12 @@ export const petEditSchema = {
       description: 'Pet edit record response successfully',
       type: 'object',
       properties: {
-        pets: {
-          type: 'array',
-          items: petResponse,
+        message: {
+          type: 'string',
+          example: "The pet's record was successfully updated.",
         },
       },
-      required: ['pets'],
+      required: ['message'],
     },
     401: {
       description: 'Pet edit record response without authentication',
