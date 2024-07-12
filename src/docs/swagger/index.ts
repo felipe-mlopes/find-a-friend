@@ -257,6 +257,15 @@ const conflictError = {
   required: ['message'],
 }
 
+const notAllowedError = {
+  description: 'Not allowed error',
+  type: 'object',
+  properties: {
+    message: { type: 'string', example: 'Not allowed.' },
+  },
+  required: ['message'],
+}
+
 const internalServerError = {
   description: 'Internal server error',
   type: 'object',
@@ -429,7 +438,7 @@ export const petRegistrationSchema = {
       description: 'Pet registration response successfully',
       type: 'object',
       properties: {
-        message: { type: 'string' },
+        message: { type: 'string', example: 'Pet was created successfully.' },
       },
       required: ['message'],
     },
@@ -443,6 +452,82 @@ export const petRegistrationSchema = {
       required: ['message'],
     },
   },
+}
+
+export const petEditSchema = {
+  summary: 'Edit a pet record',
+  querystring: {
+    name: { type: 'string' },
+    description: { type: 'string' },
+    age: { type: 'string', enum: ['PUPPY', 'ADULT', 'SENIOR'] },
+    size: { type: 'string', enum: ['SMALL', 'MEDIUM', 'BIG'] },
+    independence_level: { type: 'string', enum: ['LOW', 'MEDIUM', 'HIGH'] },
+    energy_level: { type: 'string', enum: ['CALM', 'PEACEFUL', 'FUSSY'] },
+    environment: { type: 'string', enum: ['TIGHT', 'NORMAL', 'WIDE'] },
+  },
+  response: {
+    204: {
+      description: 'Pet edit record response successfully',
+      type: 'object',
+      properties: {
+        message: {
+          type: 'string',
+          example: "The pet's record was successfully updated.",
+        },
+      },
+      required: ['message'],
+    },
+    401: {
+      description: 'Pet edit record response without authentication',
+      type: 'object',
+      properties: {
+        message: { type: 'string', example: 'Unauthorized.' },
+      },
+      required: ['message'],
+    },
+    404: notFoundError,
+    405: notAllowedError,
+    500: internalServerError,
+  },
+  security: [
+    {
+      AccessToken: [],
+    },
+  ],
+  tags: ['pets'],
+}
+
+export const petDeleteSchema = {
+  summary: 'Delete a pet record',
+  response: {
+    202: {
+      description: 'Pet delete record response successfully',
+      type: 'object',
+      properties: {
+        message: {
+          type: 'string',
+          example: "The pet's record was successfully deleted.",
+        },
+      },
+      required: ['message'],
+    },
+    401: {
+      description: 'Pet delete record response without authentication',
+      type: 'object',
+      properties: {
+        message: { type: 'string', example: 'Unauthorized.' },
+      },
+      required: ['message'],
+    },
+    405: notAllowedError,
+    500: internalServerError,
+  },
+  security: [
+    {
+      AccessToken: [],
+    },
+  ],
+  tags: ['pets'],
 }
 
 export const orgRegistrationSchema = {

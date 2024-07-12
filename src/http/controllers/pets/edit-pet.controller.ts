@@ -20,8 +20,6 @@ export async function editPetController(
       independence_level: z.enum(['LOW', 'MEDIUM', 'HIGH']).optional(),
       energy_level: z.enum(['CALM', 'PEACEFUL', 'FUSSY']).optional(),
       environment: z.enum(['TIGHT', 'NORMAL', 'WIDE']).optional(),
-      images: z.string().array().optional(),
-      requirement: z.string().array().optional(),
     }),
   })
 

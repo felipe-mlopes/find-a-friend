@@ -35,7 +35,7 @@ export async function registerPetController(
 
   const registerPetService = makeRegisterPetService()
 
-  const message = await registerPetService.execute({
+  const { message } = await registerPetService.execute({
     name,
     description,
     age,
