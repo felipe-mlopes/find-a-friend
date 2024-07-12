@@ -10,7 +10,9 @@ import { editPetController } from './edit-pet.controller'
 import { verifyJWT } from '@/http/middlewares/verify-jwt'
 
 import {
+  petDeleteSchema,
   petDetailsSchema,
+  petEditSchema,
   petRegistrationSchema,
   petsByCharsSchema,
   petsSchema,
@@ -42,9 +44,14 @@ export async function petsRoutes(app: FastifyInstance) {
     '/pets/pet/:id',
     {
       onRequest: [verifyJWT],
+      schema: petEditSchema,
     },
     editPetController,
   )
 
-  app.delete('/pets/pet/:id', { onRequest: [verifyJWT] }, deletePetController)
+  app.delete(
+    '/pets/pet/:id',
+    { onRequest: [verifyJWT], schema: petDeleteSchema },
+    deletePetController,
+  )
 }
