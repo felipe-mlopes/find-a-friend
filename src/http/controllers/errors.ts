@@ -5,6 +5,7 @@ import { ResourceNotFoundError } from '@/services/errors/resource-not-found-erro
 import { OrgAlreadyExistsError } from '@/services/errors/org-already-exists-error'
 import { InvalidCEPError } from '@/services/errors/invalid-cep-error'
 import { InvalidCredentialsError } from '@/services/errors/invalid-credentials-error'
+import { NotAllowedError } from '@/services/errors/not-allowed-error'
 
 export function errorHandler(
   error: FastifyError,
@@ -19,6 +20,10 @@ export function errorHandler(
 
   if (error instanceof ResourceNotFoundError) {
     return reply.status(404).send({ message: 'Not found.' })
+  }
+
+  if (error instanceof NotAllowedError) {
+    return reply.status(405).send({ message: 'Not allowed.' })
   }
 
   if (error instanceof OrgAlreadyExistsError) {
