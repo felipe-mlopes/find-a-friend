@@ -46,7 +46,7 @@ describe('', () => {
     const petId = pets[0].id
 
     const data = {
-      ...pets,
+      ...pets[0],
       age: 'ADULT',
     }
 
