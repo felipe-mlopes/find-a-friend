@@ -58,7 +58,6 @@ export class RegisterPetService {
       requirement,
       org_id: orgId,
       created_at: new Date(),
-      updated_at: new Date(),
     })
 
     return {
