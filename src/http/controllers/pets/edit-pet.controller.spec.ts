@@ -57,6 +57,6 @@ describe('', () => {
         data,
       })
 
-    expect(response.statusCode).toEqual(204)
+    expect(response.statusCode).toEqual(200)
   })
 })

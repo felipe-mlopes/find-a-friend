@@ -50,6 +50,6 @@ describe('', () => {
       .set('Authorization', `Bearer ${access_token}`)
       .send()
 
-    expect(response.statusCode).toEqual(202)
+    expect(response.statusCode).toEqual(204)
   })
 })

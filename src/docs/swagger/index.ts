@@ -466,7 +466,7 @@ export const petEditSchema = {
     environment: { type: 'string', enum: ['TIGHT', 'NORMAL', 'WIDE'] },
   },
   response: {
-    204: {
+    200: {
       description: 'Pet edit record response successfully',
       type: 'object',
       properties: {
@@ -500,16 +500,9 @@ export const petEditSchema = {
 export const petDeleteSchema = {
   summary: 'Delete a pet record',
   response: {
-    202: {
+    204: {
       description: 'Pet delete record response successfully',
-      type: 'object',
-      properties: {
-        message: {
-          type: 'string',
-          example: "The pet's record was successfully deleted.",
-        },
-      },
-      required: ['message'],
+      type: 'null',
     },
     401: {
       description: 'Pet delete record response without authentication',

@@ -17,10 +17,10 @@ export async function deletePetController(
 
   const deletePetService = makeDeletePetService()
 
-  const { message } = await deletePetService.execute({
+  await deletePetService.execute({
     id,
     orgId,
   })
 
-  return reply.status(202).send({ message })
+  return reply.status(204).send()
 }

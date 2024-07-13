@@ -36,5 +36,5 @@ export async function editPetController(
     orgId,
   })
 
-  return reply.status(204).send({ message })
+  return reply.status(200).send({ message })
 }

@@ -8,17 +8,10 @@ interface DeletePetRecordServiceRequest {
   orgId: string
 }
 
-interface DeletePetRecordServiceResponse {
-  message: string
-}
-
 export class DeletePetRecordService {
   constructor(private petsRepository: PetsRepository) {}
 
-  async execute({
-    id,
-    orgId,
-  }: DeletePetRecordServiceRequest): Promise<DeletePetRecordServiceResponse> {
+  async execute({ id, orgId }: DeletePetRecordServiceRequest): Promise<void> {
     const pet = await this.petsRepository.findById(id)
 
     if (!pet) {
@@ -30,9 +23,5 @@ export class DeletePetRecordService {
     }
 
     await this.petsRepository.delete(pet.id)
-
-    return {
-      message: "The pet's record was successfully deleted.",
-    }
   }
 }

@@ -55,12 +55,12 @@ describe('Delete Pet Record Service', () => {
 
     const pet = petsRepository.items[0]
 
-    const result = await sut.execute({
+    await sut.execute({
       id: pet.id,
       orgId: org.id,
     })
 
-    expect(result.message).toEqual(expect.any(String))
+    expect(petsRepository.items).toEqual([])
   })
 
   it('should not be to able delete a pet record without it being registered', async () => {
