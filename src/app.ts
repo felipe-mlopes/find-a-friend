@@ -57,6 +57,9 @@ app.register(fastifyCookie)
 // Routes
 app.register(orgsRoutes)
 app.register(petsRoutes)
+app.get('/health', async () => {
+  return { status: 'ok' }
+})
 
 // Error handling
 app.setErrorHandler(errorHandler)
